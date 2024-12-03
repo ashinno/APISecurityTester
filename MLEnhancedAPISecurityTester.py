@@ -149,7 +149,6 @@ class MLEnhancedAPISecurityTester:
 
         return results
 
-    # Existing methods from previous implementation
     def check_https(self, url):
         parsed_url = urlparse(url)
         return "Secure (HTTPS)" if parsed_url.scheme == 'https' else "Insecure (HTTP)"
