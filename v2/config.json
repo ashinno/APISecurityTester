@@ -1,0 +1,3 @@
+{
+    "sensitive_keywords": ["key", "token", "password", "ssn", "credit", "card"]
+}
