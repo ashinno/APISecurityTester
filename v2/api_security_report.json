@@ -1,0 +1,73 @@
+{
+  "total_vulnerabilities": 8,
+  "severity_breakdown": {
+    "High": 3,
+    "Medium": 5,
+    "Low": 0
+  },
+  "vulnerabilities": [
+    {
+      "type": "Transport Security",
+      "severity": "High",
+      "description": "SSL/TLS connection error: cert_time_to_seconds() missing 1 required positional argument: 'cert_time'"
+    },
+    {
+      "type": "Authentication",
+      "severity": "High",
+      "endpoint": "users",
+      "description": "Endpoint accessible without authentication"
+    },
+    {
+      "type": "Authentication",
+      "severity": "Medium",
+      "endpoint": "users",
+      "description": "Possible basic authentication bypass"
+    },
+    {
+      "type": "Data Exposure",
+      "severity": "High",
+      "endpoint": "users",
+      "description": "Potential email exposure",
+      "matches": [
+        "Sincere@april.biz",
+        "Shanna@melissa.tv",
+        "Nathan@yesenia.net",
+        "Julianne.OConner@kory.org",
+        "Lucio_Hettinger@annie.ca",
+        "Karley_Dach@jasper.info",
+        "Telly.Hoeger@billy.biz",
+        "Sherwood@rosamond.me",
+        "Chaim_McDermott@dana.io",
+        "Rey.Padberg@karina.biz"
+      ]
+    },
+    {
+      "type": "Header Exposure",
+      "severity": "Medium",
+      "endpoint": "admin",
+      "header": "Report-To",
+      "description": "Potential api_key exposure in header"
+    },
+    {
+      "type": "Header Exposure",
+      "severity": "Medium",
+      "endpoint": "admin",
+      "header": "Reporting-Endpoints",
+      "description": "Potential api_key exposure in header"
+    },
+    {
+      "type": "Header Exposure",
+      "severity": "Medium",
+      "endpoint": "sensitive-data",
+      "header": "Report-To",
+      "description": "Potential api_key exposure in header"
+    },
+    {
+      "type": "Header Exposure",
+      "severity": "Medium",
+      "endpoint": "sensitive-data",
+      "header": "Reporting-Endpoints",
+      "description": "Potential api_key exposure in header"
+    }
+  ]
+}
