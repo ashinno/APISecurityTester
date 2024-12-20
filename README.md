@@ -1,74 +1,172 @@
-# ML-Powered API Security Analyzer
 
-## Project Overview
+# Enhancing Mobile Application Security: An Integrated Framework with Link Security Assessment
 
-The ML-Powered API Security Analyzer is an advanced cybersecurity tool designed to comprehensively assess and identify potential vulnerabilities in API endpoints using cutting-edge machine learning techniques. By combining traditional security checks with intelligent anomaly detection and threat classification, this project offers a sophisticated approach to API security assessment.
+## Overview
+
+This repository contains the code and resources for the research paper "Enhancing Mobile Application Security: An Integrated Framework with Link Security Assessment." The project introduces a novel framework that combines traditional mobile application security testing methodologies with a dedicated **Link Security Tester** module. The framework aims to identify and mitigate vulnerabilities in mobile applications, focusing on both internal application logic and the security of external links embedded within the apps.
+
+The framework integrates:
+
+*   **Static Analysis:** Examines application code for vulnerabilities without execution.
+*   **Dynamic Analysis:** Monitors application behavior during runtime to detect vulnerabilities.
+*   **Machine Learning-Based Anomaly Detection:** Uses an LSTM model to identify unusual patterns that may indicate security risks.
+*   **Link Security Tester:** A novel module that assesses the security of external links using a multi-faceted approach (SSL/TLS checks, DNS resolution, WHOIS information, HTTP requests).
 
 ## Key Features
 
-### Advanced Security Testing
-- Comprehensive HTTPS and authentication vulnerability scanning
-- Machine learning-powered threat detection
-- Anomaly identification in API responses
-- Sensitive data exposure analysis
+*   **Comprehensive Security Evaluation:** Combines multiple testing techniques for a holistic assessment.
+*   **Novel Link Security Tester:** Addresses the often-overlooked risk of malicious external links.
+*   **Machine Learning Integration:** Leverages an LSTM model for anomaly detection.
+*   **Detailed Reporting:** Generates comprehensive reports, including vulnerability details, threat classifications, and link security assessments.
+*   **Extensible Design:** The framework can be extended with new analysis modules and security checks.
 
-### Intelligent Machine Learning Components
-- Isolation Forest for anomaly detection
-- Neural network-based text threat classification
-- Dynamic feature engineering
-- Adaptive threat scoring mechanism
+## Project Structure
 
-### Flexible Analysis Capabilities
-- Support for multiple API endpoint types
-- Configurable security testing parameters
-- Detailed vulnerability reporting
-- Extensible machine learning models
+```
+mobile-app-security-framework/
+├── link_security_tester/         # Source code for the Link Security Tester module
+│   ├── __init__.py
+│   └── link_tester.py
+├── machine_learning/            # Source code for the machine learning module
+│   ├── __init__.py
+│   ├── model.py
+│   └── training_data.csv     # Sample training data for the ML model
+├── static_analysis/             # Source code for the static analysis module
+│   ├── __init__.py
+│   └── static_analyzer.py
+├── dynamic_analysis/            # Source code for the dynamic analysis module
+│   ├── __init__.py
+│   └── dynamic_analyzer.py
+├── utils/                       # Utility functions and helper scripts
+│   ├── __init__.py
+│   └── helpers.py
+├── requirements.txt             # Project dependencies
+├── config.json                  # Configuration file
+├── main.py                      # Main script for running the framework
+├── README.md                    # This README file
+└── data/                      # Directory to store test applications and results
+    └── results/                  
+```
 
-## Core Functionalities
+## Installation
 
-1. **Security Vulnerability Detection**
-   - Identify potential security weaknesses in API endpoints
-   - Analyze authentication mechanisms
-   - Detect sensitive information exposure risks
+1. **Clone the repository:**
 
-2. **Machine Learning Enhanced Analysis**
-   - Predict potential security threats using advanced algorithms
-   - Classify and score API response risks
-   - Generate comprehensive security insights
+    ```bash
+    git clone https://github.com/your-username/mobile-app-security-framework.git
+    cd mobile-app-security-framework
+    ```
 
-3. **Detailed Reporting**
-   - Generate structured vulnerability reports
-   - Provide actionable security recommendations
-   - Visualize potential threat landscapes
+2. **Install dependencies:**
 
-## Use Cases
+    ```bash
+    pip install -r requirements.txt
+    ```
+    **Note:** The code requires additional dependencies for full functionality:
+    ```bash
+    pip install requests dnspython python-whois certifi
+    ```
 
-- **Enterprise Security Auditing**
-- **Continuous API Monitoring**
-- **Penetration Testing**
-- **Security Research**
-- **Developer Security Validation**
+3. **Install TensorFlow:**
+    ```bash
+    pip install tensorflow
+    ```
 
-## Research and Innovation
+## Usage
 
-This project represents an innovative approach to cybersecurity, demonstrating how machine learning can be leveraged to enhance traditional security testing methodologies. By combining statistical anomaly detection, neural network classification, and comprehensive security checks, the tool provides a holistic view of API security risks.
+1. **Configuration:**
 
-## Ethical Considerations
+    *   Modify the `config.json` file to set parameters for the different modules (e.g., paths to analysis tools, API keys, etc.).
+    *   Example `config.json`:
 
-We are committed to responsible security research and tool development. This project is intended strictly for educational, research, and authorized security testing purposes. Users must obtain proper authorization before testing any API endpoints.
+```json
+{
+    "static_analysis": {
+        "enabled": true,
+        "tool_path": "/path/to/static/analyzer"
+    },
+    "dynamic_analysis": {
+        "enabled": true,
+        "emulator_path": "/path/to/android/emulator"
+    },
+    "machine_learning": {
+        "enabled": true,
+        "model_path": "machine_learning/model.h5"
+    },
+    "link_security_tester": {
+        "enabled": true
+    }
+}
+```
 
-## Future Development Roadmap
+2. **Running the Framework:**
 
-- Enhanced machine learning model architectures
-- Expanded threat detection capabilities
-- Integration with continuous integration/deployment (CI/CD) pipelines
-- Support for more diverse API protocols and architectures
+    *   Place the mobile applications (APKs) you want to test in the `data/` directory.
+    *   Execute the `main.py` script:
 
-## Contributions
+    ```bash
+    python main.py --app data/app1.apk data/app2.apk
+    ```
+    Or, to test specific links:
+    ```bash
+    python main.py --links https://www.example.com https://github.com http://suspicious-site.com
+    ```
 
-Contributions, research collaborations, and constructive feedback are welcome. Please adhere to responsible disclosure and ethical guidelines when exploring security technologies.
+3. **Viewing Results:**
+
+    *   The framework will generate reports in the `data/results/` directory.
+    *   Reports will include:
+        *   Static analysis findings
+        *   Dynamic analysis findings
+        *   Anomaly detection results
+        *   Link security assessments (including security scores and identified risks)
+    *   Example Link Security Report Output:
+    ```text
+    Link Security Report:
+    Link Security Assessment Report
+    ========================================
+
+    URL: https://www.example.com
+    Security Score: 95.00/100
+    Overall Status: SAFE
+
+    ----------------------------------------
+
+    URL: https://github.com
+    Security Score: 95.00/100
+    Overall Status: SAFE
+
+    ----------------------------------------
+
+    URL: http://suspicious-site.com
+    Security Score: 5.00/100
+    Overall Status: RISKY
+    Detected Risks:
+    - Suspicious URL pattern detected
+    - Invalid or expired SSL certificate
+    - Request failed: HTTPConnectionPool(host='suspicious-site.com', port=80): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x...>: Failed to establish a new connection: [Errno 111] Connection refused'))
+
+    ----------------------------------------
+    ```
+
+## Dataset
+
+The framework was evaluated on a dataset of 1,000 mobile applications from various categories. The dataset is not included in this repository due to its size and potential privacy concerns. However, a sample of training data for the machine learning model is provided in `machine_learning/training_data.csv`.
+
+## Contributing
+
+Contributions to this project are welcome! Please follow these guidelines:
+
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them with clear messages.
+4. Submit a pull request.
+
+## Citation
+
+If you use this framework in your research, please cite the repo
 
 
-## Acknowledgments
+## Contact
 
-Special thanks to the open-source community, cybersecurity researchers, and machine learning practitioners who continue to push the boundaries of security technology.
+For any questions or inquiries, please contact  contact@ashinno.com.
