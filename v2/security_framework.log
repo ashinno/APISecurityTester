@@ -1,0 +1,22 @@
+2025-02-25 00:20:41,582 - INFO - Loading dataset from mobile_app_vulnerabilities.csv
+2025-02-25 00:20:41,609 - INFO - Dataset loaded and preprocessed successfully
+2025-02-25 00:20:41,894 - INFO - Model built successfully
+2025-02-25 00:20:51,564 - INFO - Model training completed
+2025-02-25 00:20:52,153 - INFO - Training history plot saved
+2025-02-25 00:20:52,369 - INFO - Advanced metrics calculated
+2025-02-25 00:20:52,473 - INFO - Model evaluation completed
+2025-02-25 00:20:52,475 - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2025-02-25 00:20:52,515 - INFO - Model saved to models/vulnerability_model.h5
+2025-02-25 00:20:52,595 - INFO - Vulnerability detection completed
+2025-02-25 00:20:52,595 - INFO - Security report generated
+2025-02-25 00:25:00,170 - INFO - Loading dataset from mobile_app_vulnerabilities.csv
+2025-02-25 00:25:00,180 - INFO - Dataset loaded and preprocessed successfully
+2025-02-25 00:25:00,300 - INFO - Model built successfully
+2025-02-25 00:25:08,458 - INFO - Model training completed
+2025-02-25 00:25:08,923 - INFO - Training history plot saved
+2025-02-25 00:25:09,122 - INFO - Advanced metrics calculated
+2025-02-25 00:25:09,224 - INFO - Model evaluation completed
+2025-02-25 00:25:09,226 - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2025-02-25 00:25:09,258 - INFO - Model saved to models/vulnerability_model.h5
+2025-02-25 00:25:09,341 - INFO - Vulnerability detection completed
+2025-02-25 00:25:09,342 - INFO - Security report generated
