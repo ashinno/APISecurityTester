@@ -121,9 +121,11 @@ class MobileAppSecurityFramework:
             try:
                 numeric_value = float(value)
                 if not 0 <= numeric_value <= 1:
-                    raise TypeError(f"Feature {feature} must be numeric and between 0 and 1")
+                    raise ValueError(f"Feature {feature} must be between 0 and 1")
                 validated_features[feature] = numeric_value
-            except (TypeError, ValueError):
+            except (TypeError, ValueError) as e:
+                if isinstance(e, ValueError) and str(e).startswith("Feature"):
+                    raise
                 raise TypeError(f"Feature {feature} must be numeric and between 0 and 1")
         
         # Update original features with validated values
@@ -371,10 +373,19 @@ class MobileAppSecurityFramework:
         weighted_risk_score = sum((1 - float(app_features[feature])) * weight 
                                 for feature, weight in risk_weights.items())
         
-        # Combine model prediction with weighted risk analysis using sigmoid scaling
-        scaled_risk = 1 / (1 + np.exp(-5 * (weighted_risk_score - 0.5)))
-        final_vulnerability_score = (vulnerability_prob * 0.6 + scaled_risk * 0.4)
-
+        # Enhanced sigmoid scaling with adjusted parameters for better extreme case handling
+        scaled_risk = 1 / (1 + np.exp(-8 * (weighted_risk_score - 0.6)))
+        
+        # Adjust the final vulnerability score calculation with more weight on the risk score
+        model_confidence = 1 / (1 + np.exp(-10 * (vulnerability_prob - 0.5)))
+        final_vulnerability_score = float(vulnerability_prob * 0.4 + scaled_risk * 0.6)
+        
+        # Apply additional scaling for extreme cases
+        if weighted_risk_score > 0.8:
+            final_vulnerability_score = min(0.95, final_vulnerability_score * 1.2)
+        elif weighted_risk_score < 0.2:
+            final_vulnerability_score = max(0.05, final_vulnerability_score * 0.8)
+        
         # Enhanced vulnerability breakdown with specific risk categories
         vulnerability_types = {
             'data_security_risks': {
