@@ -158,17 +158,23 @@ class MobileAppSecurityFramework:
         return df
 
     def build_ml_model(self):
-        """Build and compile the vulnerability detection model"""
+        """Build and compile the vulnerability detection model with improved architecture"""
         if self.X_train_scaled is None:
             raise ValueError("Dataset must be loaded first")
 
         self.vulnerability_model = tf.keras.Sequential([
-            tf.keras.layers.Dense(64, activation='relu', 
+            tf.keras.layers.Dense(128, activation='relu', 
                                 input_shape=(self.X_train_scaled.shape[1],)),
+            tf.keras.layers.BatchNormalization(),
+            tf.keras.layers.Dropout(self.config['model_params']['dropout_rate']),
+            tf.keras.layers.Dense(64, activation='relu'),
+            tf.keras.layers.BatchNormalization(),
             tf.keras.layers.Dropout(self.config['model_params']['dropout_rate']),
             tf.keras.layers.Dense(32, activation='relu'),
-            tf.keras.layers.Dropout(self.config['model_params']['dropout_rate']),
+            tf.keras.layers.BatchNormalization(),
+            tf.keras.layers.Dropout(self.config['model_params']['dropout_rate']/2),
             tf.keras.layers.Dense(16, activation='relu'),
+            tf.keras.layers.BatchNormalization(),
             tf.keras.layers.Dense(1, activation='sigmoid')
         ])
 
@@ -177,31 +183,38 @@ class MobileAppSecurityFramework:
                 learning_rate=self.config['model_params']['learning_rate']
             ),
             loss='binary_crossentropy',
-            metrics=['accuracy']
+            metrics=['accuracy', tf.keras.metrics.AUC(), tf.keras.metrics.Precision(), tf.keras.metrics.Recall()]
         )
-        self.logger.info("Model built successfully")
+        self.logger.info("Enhanced model built successfully")
 
     def train_model(self):
-        """Train the vulnerability detection model"""
+        """Train the vulnerability detection model with extended training"""
         if self.vulnerability_model is None:
             raise ValueError("Model must be built first")
 
         early_stopping = tf.keras.callbacks.EarlyStopping(
             monitor='val_loss',
-            patience=10,
+            patience=15,  # Increased patience
             restore_best_weights=True
+        )
+
+        reduce_lr = tf.keras.callbacks.ReduceLROnPlateau(
+            monitor='val_loss',
+            factor=0.2,
+            patience=5,
+            min_lr=0.0001
         )
 
         history = self.vulnerability_model.fit(
             self.X_train_scaled,
             self.y_train,
             validation_split=self.config['training_params']['validation_split'],
-            epochs=self.config['training_params']['epochs'],
+            epochs=100,  # Increased epochs for better training
             batch_size=self.config['model_params']['batch_size'],
-            callbacks=[early_stopping]
+            callbacks=[early_stopping, reduce_lr]
         )
         
-        self.logger.info("Model training completed")
+        self.logger.info("Extended model training completed")
         return history
 
     def save_model(self, model_path: str = 'models/vulnerability_model.h5'):

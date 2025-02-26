@@ -157,3 +157,81 @@ def test_advanced_metrics(framework):
     assert isinstance(metrics['pr_auc'], float)
     assert 0 <= metrics['roc_auc'] <= 1
     assert 0 <= metrics['pr_auc'] <= 1
+
+def test_model_performance_metrics(framework):
+    # Setup
+    framework.generate_dataset(n_samples=100)
+    framework.load_dataset('mobile_app_vulnerabilities.csv')
+    framework.build_ml_model()
+    framework.train_model()
+    
+    # Test model metrics
+    metrics = framework.calculate_advanced_metrics()
+    model_performance = framework.evaluate_model()
+    
+    # Verify ROC and PR curves
+    assert len(metrics['fpr']) > 0
+    assert len(metrics['tpr']) > 0
+    assert len(metrics['precision']) > 0
+    assert len(metrics['recall']) > 0
+    
+    # Verify confusion matrix
+    assert model_performance['confusion_matrix'].shape == (2, 2)
+    
+def test_extreme_vulnerability_cases(framework):
+    high_risk_features = {
+        'storage_encryption_level': 0.1,
+        'api_security_score': 0.1,
+        'data_transmission_security': 0.1,
+        'authentication_strength': 0.1,
+        'input_validation_score': 0.1,
+        'network_communication_security': 0.1,
+        'third_party_library_risk': 0.9,
+        'runtime_permissions_management': 0.1,
+        'code_obfuscation_level': 0.1,
+        'certificate_pinning_implementation': 0.1
+    }
+    
+    low_risk_features = {
+        'storage_encryption_level': 0.9,
+        'api_security_score': 0.9,
+        'data_transmission_security': 0.9,
+        'authentication_strength': 0.9,
+        'input_validation_score': 0.9,
+        'network_communication_security': 0.9,
+        'third_party_library_risk': 0.1,
+        'runtime_permissions_management': 0.9,
+        'code_obfuscation_level': 0.9,
+        'certificate_pinning_implementation': 0.9
+    }
+    
+    # Setup
+    framework.generate_dataset(n_samples=100)
+    framework.load_dataset('mobile_app_vulnerabilities.csv')
+    framework.build_ml_model()
+    framework.train_model()
+    
+    # Test high risk case
+    high_risk_results = framework.detect_vulnerabilities(high_risk_features)
+    assert high_risk_results['total_vulnerability_score'] > 0.5
+    
+    # Test low risk case
+    low_risk_results = framework.detect_vulnerabilities(low_risk_features)
+    assert low_risk_results['total_vulnerability_score'] < 0.5
+
+def test_advanced_metrics(framework):
+    # Setup
+    framework.generate_dataset(n_samples=100)
+    framework.load_dataset('mobile_app_vulnerabilities.csv')
+    framework.build_ml_model()
+    framework.train_model()
+    
+    # Calculate metrics
+    metrics = framework.calculate_advanced_metrics()
+    
+    assert 'roc_auc' in metrics
+    assert 'pr_auc' in metrics
+    assert isinstance(metrics['roc_auc'], float)
+    assert isinstance(metrics['pr_auc'], float)
+    assert 0 <= metrics['roc_auc'] <= 1
+    assert 0 <= metrics['pr_auc'] <= 1
