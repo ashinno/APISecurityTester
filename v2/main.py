@@ -56,11 +56,16 @@ class MobileAppSecurityFramework:
             'model_params': {
                 'learning_rate': float,
                 'dropout_rate': float,
-                'batch_size': int
+                'batch_size': int,
+                'l2_regularization': float
             },
             'training_params': {
                 'epochs': int,
-                'validation_split': float
+                'validation_split': float,
+                'early_stopping_patience': int,
+                'reduce_lr_patience': int,
+                'reduce_lr_factor': float,
+                'min_lr': float
             }
         }
         
@@ -71,12 +76,28 @@ class MobileAppSecurityFramework:
             for param, param_type in params.items():
                 if param not in self.config[section]:
                     if param_type == float:
-                        self.config[section][param] = 0.001 if param == 'learning_rate' else 0.3
+                        if param == 'learning_rate':
+                            self.config[section][param] = 0.001
+                        elif param == 'l2_regularization':
+                            self.config[section][param] = 0.01
+                        elif param == 'reduce_lr_factor':
+                            self.config[section][param] = 0.2
+                        elif param == 'min_lr':
+                            self.config[section][param] = 0.00001
+                        else:
+                            self.config[section][param] = 0.3
                     elif param_type == int:
-                        self.config[section][param] = 32 if param == 'batch_size' else 50
+                        if param == 'batch_size':
+                            self.config[section][param] = 32
+                        elif param == 'early_stopping_patience':
+                            self.config[section][param] = 20
+                        elif param == 'reduce_lr_patience':
+                            self.config[section][param] = 10
+                        else:
+                            self.config[section][param] = 50
 
     def validate_features(self, app_features: Dict[str, Any]) -> bool:
-        """Validate input features"""
+        """Validate input features and ensure numeric type conversion"""
         required_features = [
             'storage_encryption_level',
             'api_security_score',
@@ -94,12 +115,19 @@ class MobileAppSecurityFramework:
         if missing_features:
             raise ValueError(f"Missing required features: {missing_features}")
             
+        # Convert and validate each feature
+        validated_features = {}
         for feature, value in app_features.items():
-            if not isinstance(value, (int, float)):
-                raise TypeError(f"Feature {feature} must be numeric")
-            if not 0 <= value <= 1:
-                raise ValueError(f"Feature {feature} must be between 0 and 1")
-                
+            try:
+                numeric_value = float(value)
+                if not 0 <= numeric_value <= 1:
+                    raise TypeError(f"Feature {feature} must be numeric and between 0 and 1")
+                validated_features[feature] = numeric_value
+            except (TypeError, ValueError):
+                raise TypeError(f"Feature {feature} must be numeric and between 0 and 1")
+        
+        # Update original features with validated values
+        app_features.update(validated_features)
         return True
 
     def load_dataset(self, dataset_path: str):
@@ -162,20 +190,29 @@ class MobileAppSecurityFramework:
         if self.X_train_scaled is None:
             raise ValueError("Dataset must be loaded first")
 
+        # Add L2 regularization
+        regularizer = tf.keras.regularizers.l2(self.config['model_params'].get('l2_regularization', 0.01))
+
         self.vulnerability_model = tf.keras.Sequential([
-            tf.keras.layers.Dense(128, activation='relu', 
-                                input_shape=(self.X_train_scaled.shape[1],)),
+            tf.keras.layers.Dense(256, activation='relu', 
+                                input_shape=(self.X_train_scaled.shape[1],),
+                                kernel_regularizer=regularizer),
             tf.keras.layers.BatchNormalization(),
             tf.keras.layers.Dropout(self.config['model_params']['dropout_rate']),
-            tf.keras.layers.Dense(64, activation='relu'),
+            
+            tf.keras.layers.Dense(128, activation='relu', kernel_regularizer=regularizer),
             tf.keras.layers.BatchNormalization(),
             tf.keras.layers.Dropout(self.config['model_params']['dropout_rate']),
-            tf.keras.layers.Dense(32, activation='relu'),
+            
+            tf.keras.layers.Dense(64, activation='relu', kernel_regularizer=regularizer),
             tf.keras.layers.BatchNormalization(),
             tf.keras.layers.Dropout(self.config['model_params']['dropout_rate']/2),
-            tf.keras.layers.Dense(16, activation='relu'),
+            
+            tf.keras.layers.Dense(32, activation='relu', kernel_regularizer=regularizer),
             tf.keras.layers.BatchNormalization(),
-            tf.keras.layers.Dense(1, activation='sigmoid')
+            tf.keras.layers.Dropout(self.config['model_params']['dropout_rate']/4),
+            
+            tf.keras.layers.Dense(1, activation='sigmoid', kernel_regularizer=regularizer)
         ])
 
         self.vulnerability_model.compile(
@@ -183,7 +220,11 @@ class MobileAppSecurityFramework:
                 learning_rate=self.config['model_params']['learning_rate']
             ),
             loss='binary_crossentropy',
-            metrics=['accuracy', tf.keras.metrics.AUC(), tf.keras.metrics.Precision(), tf.keras.metrics.Recall()]
+            metrics=['accuracy', 
+                    tf.keras.metrics.AUC(name='auc'),
+                    tf.keras.metrics.Precision(name='precision'),
+                    tf.keras.metrics.Recall(name='recall'),
+                    tf.keras.metrics.F1Score(name='f1_score')]
         )
         self.logger.info("Enhanced model built successfully")
 
@@ -194,22 +235,22 @@ class MobileAppSecurityFramework:
 
         early_stopping = tf.keras.callbacks.EarlyStopping(
             monitor='val_loss',
-            patience=15,  # Increased patience
+            patience=self.config['training_params']['early_stopping_patience'],
             restore_best_weights=True
         )
 
         reduce_lr = tf.keras.callbacks.ReduceLROnPlateau(
             monitor='val_loss',
-            factor=0.2,
-            patience=5,
-            min_lr=0.0001
+            factor=self.config['training_params']['reduce_lr_factor'],
+            patience=self.config['training_params']['reduce_lr_patience'],
+            min_lr=self.config['training_params']['min_lr']
         )
 
         history = self.vulnerability_model.fit(
             self.X_train_scaled,
             self.y_train,
             validation_split=self.config['training_params']['validation_split'],
-            epochs=100,  # Increased epochs for better training
+            epochs=self.config['training_params']['epochs'],
             batch_size=self.config['model_params']['batch_size'],
             callbacks=[early_stopping, reduce_lr]
         )
@@ -299,7 +340,7 @@ class MobileAppSecurityFramework:
         }
 
     def detect_vulnerabilities(self, app_features: Dict[str, Any]) -> Dict[str, float]:
-        """Detect vulnerabilities in a mobile application"""
+        """Detect vulnerabilities in a mobile application with enhanced risk assessment"""
         self.validate_features(app_features)
         
         if self.preprocessor is None:
@@ -309,18 +350,68 @@ class MobileAppSecurityFramework:
             pd.DataFrame([app_features])
         )
 
+        # Get base vulnerability probability
         vulnerability_prob = self.vulnerability_model.predict(features_array)[0][0]
 
-        vulnerability_types = {
-            'insecure_storage': vulnerability_prob * 0.4,
-            'weak_encryption': vulnerability_prob * 0.3,
-            'api_misuse': vulnerability_prob * 0.3
+        # Calculate weighted risk scores with adjusted weights for extreme cases
+        risk_weights = {
+            'storage_encryption_level': 0.20,
+            'api_security_score': 0.20,
+            'data_transmission_security': 0.15,
+            'authentication_strength': 0.15,
+            'input_validation_score': 0.10,
+            'network_communication_security': 0.10,
+            'third_party_library_risk': 0.05,
+            'runtime_permissions_management': 0.03,
+            'code_obfuscation_level': 0.01,
+            'certificate_pinning_implementation': 0.01
         }
 
-        self.logger.info("Vulnerability detection completed")
+        # Calculate inverse weighted score for risk assessment
+        weighted_risk_score = sum((1 - float(app_features[feature])) * weight 
+                                for feature, weight in risk_weights.items())
+        
+        # Combine model prediction with weighted risk analysis using sigmoid scaling
+        scaled_risk = 1 / (1 + np.exp(-5 * (weighted_risk_score - 0.5)))
+        final_vulnerability_score = (vulnerability_prob * 0.6 + scaled_risk * 0.4)
+
+        # Enhanced vulnerability breakdown with specific risk categories
+        vulnerability_types = {
+            'data_security_risks': {
+                'score': final_vulnerability_score * (1 - float(app_features['storage_encryption_level'])),
+                'factors': ['storage_encryption_level', 'data_transmission_security'],
+                'weight': 0.35
+            },
+            'authentication_risks': {
+                'score': final_vulnerability_score * (1 - float(app_features['authentication_strength'])),
+                'factors': ['authentication_strength', 'certificate_pinning_implementation'],
+                'weight': 0.25
+            },
+            'api_security_risks': {
+                'score': final_vulnerability_score * (1 - float(app_features['api_security_score'])),
+                'factors': ['api_security_score', 'input_validation_score'],
+                'weight': 0.25
+            },
+            'runtime_security_risks': {
+                'score': final_vulnerability_score * (1 - float(app_features['runtime_permissions_management'])),
+                'factors': ['runtime_permissions_management', 'third_party_library_risk'],
+                'weight': 0.15
+            }
+        }
+
+        # Calculate risk levels for each category
+        for category in vulnerability_types.values():
+            category['risk_level'] = 'High' if category['score'] > 0.7 else \
+                                    'Medium' if category['score'] > 0.4 else 'Low'
+
+        self.logger.info("Enhanced vulnerability detection completed")
         return {
-            'total_vulnerability_score': vulnerability_prob,
-            'vulnerability_breakdown': vulnerability_types
+            'total_vulnerability_score': final_vulnerability_score,
+            'vulnerability_breakdown': vulnerability_types,
+            'risk_factors': {
+                feature: {'weight': weight, 'impact': 1 - float(app_features[feature])}
+                for feature, weight in risk_weights.items()
+            }
         }
 
     def generate_security_report(self, results: Dict[str, Any]) -> str:
@@ -330,8 +421,8 @@ class MobileAppSecurityFramework:
         report += f"Total Vulnerability Score: {results['total_vulnerability_score']:.2%}\n\n"
         report += "Vulnerability Breakdown:\n"
         
-        for vuln_type, score in results['vulnerability_breakdown'].items():
-            report += f"- {vuln_type.replace('_', ' ').title()}: {score:.2%}\n"
+        for vuln_type, details in results['vulnerability_breakdown'].items():
+            report += f"- {vuln_type.replace('_', ' ').title()}: {details['score']:.2%} ({details['risk_level']})\n"
         
         self.logger.info("Security report generated")
         return report

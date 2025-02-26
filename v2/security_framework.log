@@ -20,3 +20,67 @@
 2025-02-26 19:12:51,296 - INFO - Model saved to models/vulnerability_model.h5
 2025-02-26 19:12:51,412 - INFO - Vulnerability detection completed
 2025-02-26 19:12:51,413 - INFO - Security report generated
+2025-02-26 19:21:37,678 - INFO - Loading dataset from mobile_app_vulnerabilities.csv
+2025-02-26 19:21:37,697 - INFO - Dataset loaded and preprocessed successfully
+2025-02-26 19:21:37,883 - INFO - Enhanced model built successfully
+2025-02-26 19:22:05,525 - INFO - Extended model training completed
+2025-02-26 19:22:06,077 - INFO - Training history plot saved
+2025-02-26 19:22:06,503 - INFO - Advanced metrics calculated
+2025-02-26 19:22:06,728 - INFO - Model evaluation completed
+2025-02-26 19:22:06,730 - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2025-02-26 19:22:06,811 - INFO - Model saved to models/vulnerability_model.h5
+2025-02-26 19:22:06,975 - INFO - Enhanced vulnerability detection completed
+2025-02-26 19:24:58,925 - INFO - Loading dataset from mobile_app_vulnerabilities.csv
+2025-02-26 19:24:58,949 - INFO - Dataset loaded and preprocessed successfully
+2025-02-26 19:24:59,172 - INFO - Enhanced model built successfully
+2025-02-26 19:25:31,488 - INFO - Extended model training completed
+2025-02-26 19:25:32,124 - INFO - Training history plot saved
+2025-02-26 19:25:32,698 - INFO - Advanced metrics calculated
+2025-02-26 19:25:32,918 - INFO - Model evaluation completed
+2025-02-26 19:25:32,920 - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2025-02-26 19:25:32,995 - INFO - Model saved to models/vulnerability_model.h5
+2025-02-26 19:25:33,121 - INFO - Enhanced vulnerability detection completed
+2025-02-26 19:26:32,577 - INFO - Loading dataset from mobile_app_vulnerabilities.csv
+2025-02-26 19:26:32,596 - INFO - Dataset loaded and preprocessed successfully
+2025-02-26 19:26:32,811 - INFO - Enhanced model built successfully
+2025-02-26 19:27:22,637 - INFO - Extended model training completed
+2025-02-26 19:27:23,110 - INFO - Training history plot saved
+2025-02-26 19:27:23,470 - INFO - Advanced metrics calculated
+2025-02-26 19:27:23,622 - INFO - Model evaluation completed
+2025-02-26 19:27:23,624 - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2025-02-26 19:27:23,677 - INFO - Model saved to models/vulnerability_model.h5
+2025-02-26 19:27:23,798 - INFO - Enhanced vulnerability detection completed
+2025-02-26 19:27:23,798 - INFO - Security report generated
+2025-02-26 19:42:11,145 - INFO - Loading dataset from mobile_app_vulnerabilities.csv
+2025-02-26 19:42:11,166 - INFO - Dataset loaded and preprocessed successfully
+2025-02-26 19:42:11,430 - INFO - Enhanced model built successfully
+2025-02-26 19:43:06,530 - INFO - Extended model training completed
+2025-02-26 19:43:07,006 - INFO - Training history plot saved
+2025-02-26 19:43:07,385 - INFO - Advanced metrics calculated
+2025-02-26 19:43:07,525 - INFO - Model evaluation completed
+2025-02-26 19:43:07,526 - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2025-02-26 19:43:07,584 - INFO - Model saved to models/vulnerability_model.h5
+2025-02-26 19:43:07,684 - INFO - Enhanced vulnerability detection completed
+2025-02-26 19:43:07,684 - INFO - Security report generated
+2025-02-26 19:51:56,071 - INFO - Loading dataset from mobile_app_vulnerabilities.csv
+2025-02-26 19:51:56,089 - INFO - Dataset loaded and preprocessed successfully
+2025-02-26 19:51:56,458 - INFO - Enhanced model built successfully
+2025-02-26 19:52:47,335 - INFO - Extended model training completed
+2025-02-26 19:52:48,313 - INFO - Training history plot saved
+2025-02-26 19:52:49,035 - INFO - Advanced metrics calculated
+2025-02-26 19:52:49,232 - INFO - Model evaluation completed
+2025-02-26 19:52:49,234 - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2025-02-26 19:52:49,289 - INFO - Model saved to models/vulnerability_model.h5
+2025-02-26 19:52:49,385 - INFO - Enhanced vulnerability detection completed
+2025-02-26 19:52:49,385 - INFO - Security report generated
+2025-02-26 19:56:16,799 - INFO - Loading dataset from mobile_app_vulnerabilities.csv
+2025-02-26 19:56:16,821 - INFO - Dataset loaded and preprocessed successfully
+2025-02-26 19:56:17,141 - INFO - Enhanced model built successfully
+2025-02-26 19:57:05,722 - INFO - Extended model training completed
+2025-02-26 19:57:06,376 - INFO - Training history plot saved
+2025-02-26 19:57:07,027 - INFO - Advanced metrics calculated
+2025-02-26 19:57:07,286 - INFO - Model evaluation completed
+2025-02-26 19:57:07,288 - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2025-02-26 19:57:07,367 - INFO - Model saved to models/vulnerability_model.h5
+2025-02-26 19:57:07,511 - INFO - Enhanced vulnerability detection completed
+2025-02-26 19:57:07,512 - INFO - Security report generated

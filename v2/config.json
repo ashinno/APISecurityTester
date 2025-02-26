@@ -1,3 +1,22 @@
 {
+    "model_params": {
+        "learning_rate": 0.001,
+        "dropout_rate": 0.4,
+        "batch_size": 64,
+        "l2_regularization": 0.01
+    },
+    "training_params": {
+        "epochs": 150,
+        "validation_split": 0.2,
+        "early_stopping_patience": 20,
+        "reduce_lr_patience": 10,
+        "reduce_lr_factor": 0.2,
+        "min_lr": 0.00001
+    },
+    "architecture": {
+        "hidden_layers": [256, 128, 64, 32],
+        "activation": "relu",
+        "final_activation": "sigmoid"
+    },
     "sensitive_keywords": ["key", "token", "password", "ssn", "credit", "card"]
 }
