@@ -1,9 +1,9 @@
 Metadata-Version: 2.2
 Name: api-security-tester
-Version: 0.1.0
+Version: 0.2.0
 Summary: A machine learning based mobile app security testing framework
 Home-page: https://github.com/ashinno/APISecurityTester
-Author: API Security Team
+Author: ASHINNO
 Author-email: contact@ashinno.com
 Classifier: Development Status :: 3 - Alpha
 Classifier: Intended Audience :: Developers

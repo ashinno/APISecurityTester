@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="api-security-tester",
-    version="0.1.0",
+    version="0.2.0",
     author="ASHINNO",
     author_email="contact@ashinno.com",
     description="A machine learning based mobile app security testing framework",
