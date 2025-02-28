@@ -1,0 +1,84 @@
+name: Security Testing Pipeline
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master ]
+  schedule:
+    - cron: '0 0 * * *'  # Daily security scan
+
+jobs:
+  security_testing:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest pytest-cov reportlab
+
+    - name: Run security tests
+      run: |
+        pytest v2/test_main.py --cov=v2 --cov-report=xml
+
+    - name: Generate security report
+      run: |
+        python -c "
+        from v2.main import MobileAppSecurityFramework
+        from v2.security_reporter import SecurityReporter
+        
+        framework = MobileAppSecurityFramework()
+        framework.load_dataset('v2/mobile_app_vulnerabilities.csv')
+        framework.build_ml_model()
+        framework.train_model()
+        
+        sample_app = {
+            'storage_encryption_level': 0.8,
+            'api_security_score': 0.7,
+            'data_transmission_security': 0.9,
+            'authentication_strength': 0.8,
+            'input_validation_score': 0.7,
+            'network_communication_security': 0.8,
+            'third_party_library_risk': 0.6,
+            'runtime_permissions_management': 0.7,
+            'code_obfuscation_level': 0.8,
+            'certificate_pinning_implementation': 0.9
+        }
+        
+        results = framework.detect_vulnerabilities(sample_app)
+        reporter = SecurityReporter('security_reports')
+        pdf_report = reporter.generate_pdf_report(results, 'CI/CD Security Test')
+        reporter.update_monitoring_data(results)
+        "
+
+    - name: Upload security report
+      uses: actions/upload-artifact@v3
+      with:
+        name: security-reports
+        path: security_reports/
+
+    - name: Upload coverage report
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage.xml
+        flags: unittests
+
+    - name: Check security metrics
+      run: |
+        python -c "
+        from v2.security_reporter import SecurityReporter
+        reporter = SecurityReporter('security_reports')
+        metrics = reporter.get_monitoring_metrics('24h')
+        if metrics['max_vulnerability_score'] > 0.7:
+            print('::warning::High vulnerability score detected!')
+            print(f'Max vulnerability score: {metrics["max_vulnerability_score"]:.2%}')
+        "

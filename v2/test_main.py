@@ -183,7 +183,7 @@ def test_extreme_vulnerability_cases(framework):
         'storage_encryption_level': 0.1,
         'api_security_score': 0.1,
         'data_transmission_security': 0.1,
-        'authentication_strength': 0.1,
+        'authentication_strength': 0.1, 
         'input_validation_score': 0.1,
         'network_communication_security': 0.1,
         'third_party_library_risk': 0.9,
