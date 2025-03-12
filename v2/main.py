@@ -13,7 +13,12 @@ from sklearn.metrics import (
 )
 from typing import Dict, List, Any
 from sklearn.datasets import make_classification
-
+import seaborn as sns
+from sklearn.metrics import roc_curve, precision_recall_curve, auc
+import matplotlib.pyplot as plt
+from matplotlib.gridspec import GridSpec
+sns.set_theme(style="whitegrid")
+sns.set_context("paper")
 
 class MobileAppSecurityFramework:
     def __init__(self, config_path: str = 'config.json'):
@@ -255,10 +260,19 @@ class MobileAppSecurityFramework:
             epochs=self.config['training_params']['epochs'],
             batch_size=self.config['model_params']['batch_size'],
             callbacks=[early_stopping, reduce_lr]
-        )
+        )# Add detailed accuracy reporting
+        final_metrics = self.vulnerability_model.evaluate(self.X_test_scaled, self.y_test, verbose=0)
+        metrics_names = self.vulnerability_model.metrics_names
+    
+        print("\nFinal Model Performance:")
+        for name, value in zip(metrics_names, final_metrics):
+            print(f"{name}: {value:.4f}")
+        
+        
         
         self.logger.info("Extended model training completed")
         return history
+    
 
     def save_model(self, model_path: str = 'models/vulnerability_model.h5'):
         """Save the trained model"""
@@ -438,6 +452,113 @@ class MobileAppSecurityFramework:
         self.logger.info("Security report generated")
         return report
 
+    def plot_advanced_metrics(self, save_path='model_metrics.png'):
+        """Generate publication-quality visualizations for model performance metrics"""
+        y_pred_prob = self.vulnerability_model.predict(self.X_test_scaled)
+        y_pred = (y_pred_prob > 0.5).astype(int)
+        
+        # Calculate metrics
+        fpr, tpr, _ = roc_curve(self.y_test, y_pred_prob)
+        roc_auc = auc(fpr, tpr)
+        precision, recall, _ = precision_recall_curve(self.y_test, y_pred_prob)
+        pr_auc = auc(recall, precision)
+        cm = confusion_matrix(self.y_test, y_pred)
+        
+        # Create figure with subplots
+        plt.figure(figsize=(20, 15))
+        gs = GridSpec(2, 2)
+        
+        # 1. Confusion Matrix
+        plt.subplot(gs[0, 0])
+        sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
+                   xticklabels=['No Vulnerability', 'Vulnerability'],
+                   yticklabels=['No Vulnerability', 'Vulnerability'])
+        plt.title('Confusion Matrix', fontsize=14, pad=20)
+        plt.xlabel('Predicted Label', fontsize=12)
+        plt.ylabel('True Label', fontsize=12)
+        
+        # 2. ROC Curve
+        plt.subplot(gs[0, 1])
+        plt.plot(fpr, tpr, color='darkorange', lw=2,
+                label=f'ROC Curve (AUC = {roc_auc:.3f})')
+        plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
+        plt.xlim([0.0, 1.0])
+        plt.ylim([0.0, 1.05])
+        plt.xlabel('False Positive Rate', fontsize=12)
+        plt.ylabel('True Positive Rate', fontsize=12)
+        plt.title('Receiver Operating Characteristic (ROC) Curve', fontsize=14)
+        plt.legend(loc="lower right", fontsize=10)
+        plt.grid(True)
+        
+        # 3. Precision-Recall Curve
+        plt.subplot(gs[1, 0])
+        plt.plot(recall, precision, color='green', lw=2,
+                label=f'PR Curve (AUC = {pr_auc:.3f})')
+        plt.xlabel('Recall', fontsize=12)
+        plt.ylabel('Precision', fontsize=12)
+        plt.title('Precision-Recall Curve', fontsize=14)
+        plt.legend(loc='lower left', fontsize=10)
+        plt.grid(True)
+        
+        # 4. Model Architecture Summary
+        plt.subplot(gs[1, 1])
+        layers = [
+            f'Input Layer ({self.X_train_scaled.shape[1]})',
+            'Dense(256) + BN + Dropout',
+            'Dense(128) + BN + Dropout',
+            'Dense(64) + BN + Dropout',
+            'Dense(32) + BN + Dropout',
+            'Dense(1) Sigmoid'
+        ]
+        y_pos = np.arange(len(layers))
+        plt.barh(y_pos, [1]*len(layers), align='center', color='skyblue')
+        plt.yticks(y_pos, layers)
+        plt.xlabel('Layer Sequence', fontsize=12)
+        plt.title('Model Architecture', fontsize=14)
+        
+        # Adjust layout and save
+        plt.tight_layout()
+        plt.savefig(save_path, dpi=300, bbox_inches='tight')
+        plt.close()
+        self.logger.info(f"Advanced visualization saved to {save_path}")
+
+    def plot_feature_importance(self, save_path='feature_importance.png'):
+        """Generate visualization for feature importance analysis"""
+        # Calculate feature importance based on weights
+        risk_weights = {
+            'Storage Encryption': 0.20,
+            'API Security': 0.20,
+            'Data Transmission': 0.15,
+            'Authentication': 0.15,
+            'Input Validation': 0.10,
+            'Network Security': 0.10,
+            'Third Party Risk': 0.05,
+            'Permissions Mgmt': 0.03,
+            'Code Obfuscation': 0.01,
+            'Cert Pinning': 0.01
+        }
+        
+        # Create bar plot
+        plt.figure(figsize=(12, 6))
+        features = list(risk_weights.keys())
+        weights = list(risk_weights.values())
+        
+        bars = plt.bar(features, weights, color='lightblue')
+        plt.xticks(rotation=45, ha='right')
+        plt.ylabel('Importance Weight')
+        plt.title('Feature Importance in Vulnerability Assessment')
+        
+        # Add value labels on top of bars
+        for bar in bars:
+            height = bar.get_height()
+            plt.text(bar.get_x() + bar.get_width()/2., height,
+                    f'{height:.2f}',
+                    ha='center', va='bottom')
+        
+        plt.tight_layout()
+        plt.savefig(save_path, dpi=300, bbox_inches='tight')
+        plt.close()
+        self.logger.info(f"Feature importance visualization saved to {save_path}")
 
 def main():
     # Initialize framework
@@ -463,6 +584,9 @@ def main():
     model_performance = framework.evaluate_model()
     print("\nModel Performance:")
     print(model_performance['classification_report'])
+    
+    framework.plot_advanced_metrics()
+    framework.plot_feature_importance()
 
     # Save the trained model
     framework.save_model()

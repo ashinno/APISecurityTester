@@ -106,3 +106,118 @@
 2025-02-26 20:29:51,665 - INFO - Model saved to models/vulnerability_model.h5
 2025-02-26 20:29:51,993 - INFO - Enhanced vulnerability detection completed
 2025-02-26 20:29:51,993 - INFO - Security report generated
+2025-03-07 11:19:14,715 - INFO - Loading dataset from mobile_app_vulnerabilities.csv
+2025-03-07 11:19:14,721 - INFO - Dataset loaded and preprocessed successfully
+2025-03-07 11:19:14,839 - INFO - Enhanced model built successfully
+2025-03-07 11:19:36,786 - INFO - Extended model training completed
+2025-03-07 11:19:37,309 - INFO - Training history plot saved
+2025-03-07 11:19:37,496 - INFO - Advanced metrics calculated
+2025-03-07 11:19:37,576 - INFO - Model evaluation completed
+2025-03-07 11:19:37,578 - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2025-03-07 11:19:37,623 - INFO - Model saved to models/vulnerability_model.h5
+2025-03-07 11:19:37,777 - INFO - Enhanced vulnerability detection completed
+2025-03-07 11:19:37,777 - INFO - Security report generated
+2025-03-07 11:38:45,874 - INFO - Loading dataset from mobile_app_vulnerabilities.csv
+2025-03-07 11:38:45,882 - INFO - Dataset loaded and preprocessed successfully
+2025-03-07 11:38:46,017 - INFO - Enhanced model built successfully
+2025-03-07 11:40:58,615 - INFO - Loading dataset from mobile_app_vulnerabilities.csv
+2025-03-07 11:40:58,640 - INFO - Dataset loaded and preprocessed successfully
+2025-03-07 11:40:58,978 - INFO - Enhanced model built successfully
+2025-03-07 18:41:11,122 - INFO - Loading dataset from mobile_app_vulnerabilities.csv
+2025-03-07 18:41:11,129 - INFO - Dataset loaded and preprocessed successfully
+2025-03-07 18:41:11,313 - INFO - Enhanced model built successfully
+2025-03-07 18:41:32,566 - INFO - Extended model training completed
+2025-03-07 18:41:32,953 - INFO - Training history plot saved
+2025-03-07 18:41:33,161 - INFO - Advanced metrics calculated
+2025-03-07 18:41:33,239 - INFO - Model evaluation completed
+2025-03-07 18:41:33,240 - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2025-03-07 18:41:33,286 - INFO - Model saved to models/vulnerability_model.h5
+2025-03-07 18:41:33,422 - INFO - Enhanced vulnerability detection completed
+2025-03-07 18:41:33,422 - INFO - Security report generated
+2025-03-07 18:45:13,371 - INFO - Loading dataset from mobile_app_vulnerabilities.csv
+2025-03-07 18:45:13,377 - INFO - Dataset loaded and preprocessed successfully
+2025-03-07 18:45:13,551 - INFO - Enhanced model built successfully
+2025-03-07 18:45:36,042 - INFO - Extended model training completed
+2025-03-07 18:45:36,441 - INFO - Training history plot saved
+2025-03-07 18:45:36,612 - INFO - Advanced metrics calculated
+2025-03-07 18:45:49,741 - INFO - Loading dataset from mobile_app_vulnerabilities.csv
+2025-03-07 18:45:49,749 - INFO - Dataset loaded and preprocessed successfully
+2025-03-07 18:45:49,951 - INFO - Enhanced model built successfully
+2025-03-07 18:46:11,165 - INFO - Extended model training completed
+2025-03-07 18:46:11,696 - INFO - Training history plot saved
+2025-03-07 18:46:11,865 - INFO - Advanced metrics calculated
+2025-03-07 19:01:23,781 - INFO - Loading dataset from mobile_app_vulnerabilities.csv
+2025-03-07 19:01:23,787 - INFO - Dataset loaded and preprocessed successfully
+2025-03-07 19:01:23,913 - INFO - Enhanced model built successfully
+2025-03-07 19:01:43,147 - INFO - Extended model training completed
+2025-03-07 19:01:43,520 - INFO - Training history plot saved
+2025-03-07 19:01:43,675 - INFO - Advanced metrics calculated
+2025-03-07 19:01:43,753 - INFO - Model evaluation completed
+2025-03-07 19:01:43,965 - INFO - Confusion matrix plot saved
+2025-03-07 19:01:44,028 - INFO - Advanced metrics calculated
+2025-03-07 19:01:44,201 - INFO - ROC curve saved
+2025-03-07 19:01:44,262 - INFO - Advanced metrics calculated
+2025-03-07 19:01:44,417 - INFO - Precision-Recall curve saved
+2025-03-07 19:09:56,537 - INFO - Loading dataset from mobile_app_vulnerabilities.csv
+2025-03-07 19:09:56,543 - INFO - Dataset loaded and preprocessed successfully
+2025-03-07 19:09:56,673 - INFO - Enhanced model built successfully
+2025-03-07 19:10:17,876 - INFO - Extended model training completed
+2025-03-07 19:10:18,293 - INFO - Training history plot saved
+2025-03-07 19:10:18,466 - INFO - Advanced metrics calculated
+2025-03-07 19:10:18,544 - INFO - Model evaluation completed
+2025-03-07 19:10:18,747 - INFO - Confusion matrix plot saved
+2025-03-07 19:10:18,815 - INFO - Advanced metrics calculated
+2025-03-07 19:10:18,984 - INFO - ROC curve saved
+2025-03-07 19:10:19,057 - INFO - Advanced metrics calculated
+2025-03-07 19:10:19,268 - INFO - Precision-Recall curve saved
+2025-03-07 19:13:11,370 - INFO - Loading dataset from mobile_app_vulnerabilities.csv
+2025-03-07 19:13:11,377 - INFO - Dataset loaded and preprocessed successfully
+2025-03-07 19:13:11,507 - INFO - Enhanced model built successfully
+2025-03-07 19:13:32,176 - INFO - Extended model training completed
+2025-03-07 19:13:32,559 - INFO - Training history plot saved
+2025-03-07 19:13:32,708 - INFO - Advanced metrics calculated
+2025-03-07 19:13:32,784 - INFO - Model evaluation completed
+2025-03-07 19:13:33,014 - INFO - Confusion matrix plot saved
+2025-03-07 19:13:33,083 - INFO - Advanced metrics calculated
+2025-03-07 19:13:33,243 - INFO - ROC curve saved
+2025-03-07 19:13:33,309 - INFO - Advanced metrics calculated
+2025-03-07 19:13:33,483 - INFO - Precision-Recall curve saved
+2025-03-12 10:21:33,515 - INFO - Loading dataset from mobile_app_vulnerabilities.csv
+2025-03-12 10:21:33,556 - INFO - Dataset loaded and preprocessed successfully
+2025-03-12 10:21:33,997 - INFO - Enhanced model built successfully
+2025-03-12 10:22:18,003 - INFO - Extended model training completed
+2025-03-12 10:22:19,303 - INFO - Training history plot saved
+2025-03-12 10:22:19,658 - INFO - Advanced metrics calculated
+2025-03-12 10:22:19,824 - INFO - Model evaluation completed
+2025-03-12 10:22:24,322 - INFO - Advanced visualization saved to model_metrics.png
+2025-03-12 10:22:25,532 - INFO - Feature importance visualization saved to feature_importance.png
+2025-03-12 10:22:25,534 - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2025-03-12 10:22:25,680 - INFO - Model saved to models/vulnerability_model.h5
+2025-03-12 10:22:26,057 - INFO - Enhanced vulnerability detection completed
+2025-03-12 10:22:26,058 - INFO - Security report generated
+2025-03-12 10:26:31,470 - INFO - Loading dataset from mobile_app_vulnerabilities.csv
+2025-03-12 10:26:31,489 - INFO - Dataset loaded and preprocessed successfully
+2025-03-12 10:26:31,881 - INFO - Enhanced model built successfully
+2025-03-12 10:28:15,291 - INFO - Extended model training completed
+2025-03-12 10:28:16,503 - INFO - Training history plot saved
+2025-03-12 10:28:16,829 - INFO - Advanced metrics calculated
+2025-03-12 10:28:16,986 - INFO - Model evaluation completed
+2025-03-12 10:28:21,782 - INFO - Advanced visualization saved to model_metrics.png
+2025-03-12 10:28:23,137 - INFO - Feature importance visualization saved to feature_importance.png
+2025-03-12 10:28:23,138 - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2025-03-12 10:28:23,234 - INFO - Model saved to models/vulnerability_model.h5
+2025-03-12 10:28:23,606 - INFO - Enhanced vulnerability detection completed
+2025-03-12 10:28:23,607 - INFO - Security report generated
+2025-03-12 10:33:26,604 - INFO - Loading dataset from mobile_app_vulnerabilities.csv
+2025-03-12 10:33:26,620 - INFO - Dataset loaded and preprocessed successfully
+2025-03-12 10:33:26,927 - INFO - Enhanced model built successfully
+2025-03-12 10:35:13,932 - INFO - Extended model training completed
+2025-03-12 10:35:15,241 - INFO - Training history plot saved
+2025-03-12 10:35:15,641 - INFO - Advanced metrics calculated
+2025-03-12 10:35:15,844 - INFO - Model evaluation completed
+2025-03-12 10:35:21,367 - INFO - Advanced visualization saved to model_metrics.png
+2025-03-12 10:35:22,960 - INFO - Feature importance visualization saved to feature_importance.png
+2025-03-12 10:35:22,961 - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2025-03-12 10:35:23,082 - INFO - Model saved to models/vulnerability_model.h5
+2025-03-12 10:35:23,473 - INFO - Enhanced vulnerability detection completed
+2025-03-12 10:35:23,474 - INFO - Security report generated
