@@ -327,3 +327,30 @@
 2025-04-11 11:06:41,325 - INFO - 127.0.0.1 - - [11/Apr/2025 11:06:41] "GET /api/get-visualization/feature_importance?t=1744340800999 HTTP/1.1" 200 -
 2025-04-11 11:06:41,327 - INFO - 127.0.0.1 - - [11/Apr/2025 11:06:41] "GET /api/get-visualization/training_history?t=1744340800999 HTTP/1.1" 200 -
 2025-04-11 11:37:25,837 - INFO -  * Detected change in 'D:\\Projects\\Master\\APISecurityTester\\v2\\main.py', reloading
+2025-04-11 11:37:28,674 - INFO -  * Restarting with watchdog (windowsapi)
+2025-04-11 11:37:38,303 - WARNING -  * Debugger is active!
+2025-04-11 11:37:38,367 - INFO -  * Debugger PIN: 109-460-982
+2025-04-11 11:41:14,404 - INFO - 127.0.0.1 - - [11/Apr/2025 11:41:14] "GET /vulnerability-detection HTTP/1.1" 200 -
+2025-04-11 11:41:14,654 - INFO - 127.0.0.1 - - [11/Apr/2025 11:41:14] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-11 11:41:14,660 - INFO - 127.0.0.1 - - [11/Apr/2025 11:41:14] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-11 11:41:17,311 - INFO - Loading dataset from mobile_app_vulnerabilities.csv
+2025-04-11 11:41:17,320 - INFO - Dataset loaded and preprocessed successfully
+2025-04-11 11:41:17,668 - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-04-11 11:41:17,936 - INFO - Model loaded from models/vulnerability_model.h5
+2025-04-11 11:41:18,346 - INFO - Enhanced vulnerability detection completed
+2025-04-11 11:41:18,347 - INFO - Security report generated
+2025-04-11 11:41:18,350 - INFO - 127.0.0.1 - - [11/Apr/2025 11:41:18] "POST /api/detect-vulnerabilities HTTP/1.1" 200 -
+2025-04-11 11:41:21,404 - INFO - PDF report generated: reports\security_report_20250411_114121.pdf
+2025-04-11 11:41:21,404 - INFO - 127.0.0.1 - - [11/Apr/2025 11:41:21] "POST /api/generate-pdf-report HTTP/1.1" 200 -
+2025-04-11 11:41:25,742 - INFO - 127.0.0.1 - - [11/Apr/2025 11:41:25] "GET /reports HTTP/1.1" 200 -
+2025-04-11 11:41:25,965 - INFO - 127.0.0.1 - - [11/Apr/2025 11:41:25] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-11 11:41:25,984 - INFO - 127.0.0.1 - - [11/Apr/2025 11:41:25] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-11 11:41:30,010 - INFO - 127.0.0.1 - - [11/Apr/2025 11:41:30] "GET /vulnerability-detection HTTP/1.1" 200 -
+2025-04-11 11:41:30,389 - INFO - 127.0.0.1 - - [11/Apr/2025 11:41:30] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-11 11:41:30,398 - INFO - 127.0.0.1 - - [11/Apr/2025 11:41:30] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-11 11:41:32,355 - INFO - Enhanced vulnerability detection completed
+2025-04-11 11:41:32,357 - INFO - Security report generated
+2025-04-11 11:41:32,362 - INFO - 127.0.0.1 - - [11/Apr/2025 11:41:32] "POST /api/detect-vulnerabilities HTTP/1.1" 200 -
+2025-04-11 11:41:34,047 - INFO - PDF report generated: reports\security_report_20250411_114134.pdf
+2025-04-11 11:41:34,049 - INFO - 127.0.0.1 - - [11/Apr/2025 11:41:34] "POST /api/generate-pdf-report HTTP/1.1" 200 -
+2025-04-11 11:41:39,556 - INFO - 127.0.0.1 - - [11/Apr/2025 11:41:39] "GET /api/download-report/reports/security_report_20250411_114134.pdf HTTP/1.1" 200 -

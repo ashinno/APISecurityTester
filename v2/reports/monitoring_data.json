@@ -1,0 +1,44 @@
+[
+  {
+    "timestamp": "2025-04-11T11:47:44.813769",
+    "total_vulnerability_score": 0.5482315455305858,
+    "vulnerability_breakdown": {
+      "data_security_risks": {
+        "score": 0.2741157727652929,
+        "factors": [
+          "storage_encryption_level",
+          "data_transmission_security"
+        ],
+        "weight": 0.35,
+        "risk_level": "Low"
+      },
+      "authentication_risks": {
+        "score": 0.2741157727652929,
+        "factors": [
+          "authentication_strength",
+          "certificate_pinning_implementation"
+        ],
+        "weight": 0.25,
+        "risk_level": "Low"
+      },
+      "api_security_risks": {
+        "score": 0.2741157727652929,
+        "factors": [
+          "api_security_score",
+          "input_validation_score"
+        ],
+        "weight": 0.25,
+        "risk_level": "Low"
+      },
+      "runtime_security_risks": {
+        "score": 0.2741157727652929,
+        "factors": [
+          "runtime_permissions_management",
+          "third_party_library_risk"
+        ],
+        "weight": 0.15,
+        "risk_level": "Low"
+      }
+    }
+  }
+]
