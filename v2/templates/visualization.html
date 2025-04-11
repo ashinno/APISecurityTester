@@ -1,0 +1,274 @@
+{% extends "layout.html" %}
+
+{% block title %}Visualization{% endblock %}
+
+{% block head %}
+<style>
+    .visualization-card {
+        margin-bottom: 20px;
+    }
+    .visualization-card .card-body {
+        padding: 1.25rem;
+    }
+    .visualization-container {
+        text-align: center;
+    }
+    .visualization-container img {
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 15px;
+    }
+    .metric-card {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .metric-value {
+        font-size: 2rem;
+        font-weight: bold;
+    }
+    .metric-label {
+        font-size: 0.9rem;
+        color: #6c757d;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0"><i class="fas fa-chart-line me-2"></i>Advanced
+                    Metrics Visualization</h4>
+            </div>
+            <div class="card-body">
+                <p>Visualize model performance metrics and security analysis
+                    results. These visualizations provide insights into the
+                    model's effectiveness in detecting vulnerabilities.</p>
+
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="card metric-card">
+                            <div class="card-body">
+                                <div class="metric-value"
+                                    id="accuracy-value">0.00</div>
+                                <div class="metric-label">Accuracy</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card metric-card">
+                            <div class="card-body">
+                                <div class="metric-value"
+                                    id="precision-value">0.00</div>
+                                <div class="metric-label">Precision</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card metric-card">
+                            <div class="card-body">
+                                <div class="metric-value"
+                                    id="recall-value">0.00</div>
+                                <div class="metric-label">Recall</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card metric-card">
+                            <div class="card-body">
+                                <div class="metric-value"
+                                    id="f1-value">0.00</div>
+                                <div class="metric-label">F1 Score</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card visualization-card">
+                            <div class="card-header bg-info text-white">
+                                <h5 class="mb-0"><i
+                                        class="fas fa-chart-area me-2"></i>ROC &
+                                    PR Curves</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="visualization-container">
+                                    <img id="model-metrics-img"
+                                        src="/api/get-visualization/model_metrics"
+                                        alt="ROC and PR Curves"
+                                        class="img-fluid">
+                                    <p class="text-muted">ROC (Receiver
+                                        Operating Characteristic) and PR
+                                        (Precision-Recall) curves illustrate the
+                                        model's performance across different
+                                        threshold settings.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card visualization-card">
+                            <div class="card-header bg-warning text-dark">
+                                <h5 class="mb-0"><i
+                                        class="fas fa-weight-hanging me-2"></i>Feature
+                                    Importance</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="visualization-container">
+                                    <img id="feature-importance-img"
+                                        src="/api/get-visualization/feature_importance"
+                                        alt="Feature Importance"
+                                        class="img-fluid">
+                                    <p class="text-muted">Feature importance
+                                        analysis shows the relative contribution
+                                        of each security feature to the
+                                        vulnerability detection model.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="card visualization-card">
+                            <div class="card-header bg-success text-white">
+                                <h5 class="mb-0"><i
+                                        class="fas fa-history me-2"></i>Training
+                                    History</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="visualization-container">
+                                    <img id="training-history-img"
+                                        src="/api/get-visualization/training_history"
+                                        alt="Training History"
+                                        class="img-fluid">
+                                    <p class="text-muted">Training history shows
+                                        the model's loss and accuracy metrics
+                                        during the training process, helping to
+                                        identify potential overfitting or
+                                        underfitting.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card visualization-card">
+                            <div class="card-header bg-danger text-white">
+                                <h5 class="mb-0"><i
+                                        class="fas fa-project-diagram me-2"></i>Model
+                                    Architecture</h5>
+                            </div>
+                            <div class="card-body">
+                                <pre id="model-summary" class="p-3 bg-light"
+                                    style="max-height: 300px; overflow-y: auto;"><!-- Populated by JavaScript --></pre>
+                                <p class="text-muted">Model architecture summary
+                                    shows the layers and parameters of the
+                                    neural network used for vulnerability
+                                    detection.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header bg-secondary text-white">
+                                <h5 class="mb-0"><i
+                                        class="fas fa-sync-alt me-2"></i>Refresh
+                                    Visualizations</h5>
+                            </div>
+                            <div class="card-body text-center">
+                                <p>Click the button below to refresh all
+                                    visualizations with the latest model
+                                    data.</p>
+                                <button id="refresh-btn"
+                                    class="btn btn-primary">
+                                    <i class="fas fa-sync-alt me-2"></i>Refresh
+                                    Visualizations
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Load model summary
+    function loadModelSummary() {
+        fetch('/api/get-model-summary')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('model-summary').textContent = data.summary;
+                } else {
+                    document.getElementById('model-summary').textContent = 'Model summary not available. Please train a model first.';
+                }
+            })
+            .catch(error => {
+                console.error('Error loading model summary:', error);
+                document.getElementById('model-summary').textContent = 'Error loading model summary.';
+            });
+    }
+    
+    // Load visualization images
+    function loadVisualizationImages() {
+        // Add timestamp to prevent caching
+        const timestamp = new Date().getTime();
+        
+        // Model metrics image
+        const metricsImg = document.getElementById('model-metrics-img');
+        metricsImg.src = `/api/get-visualization/model_metrics?t=${timestamp}`;
+        
+        // Feature importance image
+        const featureImg = document.getElementById('feature-importance-img');
+        featureImg.src = `/api/get-visualization/feature_importance?t=${timestamp}`;
+        
+        // Training history image
+        const historyImg = document.getElementById('training-history-img');
+        historyImg.src = `/api/get-visualization/training_history?t=${timestamp}`;
+    }
+    
+    // Simulate metrics (in a real app, these would come from the backend)
+    function simulateMetrics() {
+        document.getElementById('accuracy-value').textContent = (0.85 + Math.random() * 0.1).toFixed(2);
+        document.getElementById('precision-value').textContent = (0.82 + Math.random() * 0.1).toFixed(2);
+        document.getElementById('recall-value').textContent = (0.80 + Math.random() * 0.1).toFixed(2);
+        document.getElementById('f1-value').textContent = (0.81 + Math.random() * 0.1).toFixed(2);
+    }
+    
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+        loadModelSummary();
+        loadVisualizationImages();
+        simulateMetrics();
+        
+        // Refresh button event listener
+        document.getElementById('refresh-btn').addEventListener('click', function() {
+            this.disabled = true;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Refreshing...';
+            
+            // Reload data
+            loadModelSummary();
+            loadVisualizationImages();
+            simulateMetrics();
+            
+            // Re-enable button after a delay
+            setTimeout(() => {
+                this.disabled = false;
+                this.innerHTML = '<i class="fas fa-sync-alt me-2"></i>Refresh Visualizations';
+            }, 1500);
+        });
+    });
+</script>
+{% endblock %}

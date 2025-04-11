@@ -221,3 +221,109 @@
 2025-03-12 10:35:23,082 - INFO - Model saved to models/vulnerability_model.h5
 2025-03-12 10:35:23,473 - INFO - Enhanced vulnerability detection completed
 2025-03-12 10:35:23,474 - INFO - Security report generated
+2025-04-11 10:47:02,199 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.62.38:5000
+2025-04-11 10:47:02,199 - INFO - [33mPress CTRL+C to quit[0m
+2025-04-11 10:47:02,218 - INFO -  * Restarting with watchdog (windowsapi)
+2025-04-11 10:47:12,254 - WARNING -  * Debugger is active!
+2025-04-11 10:47:12,277 - INFO -  * Debugger PIN: 109-460-982
+2025-04-11 10:47:12,938 - INFO - 127.0.0.1 - - [11/Apr/2025 10:47:12] "GET /model-training HTTP/1.1" 200 -
+2025-04-11 10:47:13,404 - INFO - 127.0.0.1 - - [11/Apr/2025 10:47:13] "GET /static/css/style.css HTTP/1.1" 200 -
+2025-04-11 10:47:13,572 - INFO - 127.0.0.1 - - [11/Apr/2025 10:47:13] "GET /static/js/main.js HTTP/1.1" 200 -
+2025-04-11 10:47:13,897 - INFO - 127.0.0.1 - - [11/Apr/2025 10:47:13] "GET /api/get-config HTTP/1.1" 200 -
+2025-04-11 10:47:34,724 - INFO - Loading dataset from mobile_app_vulnerabilities.csv
+2025-04-11 10:47:34,739 - INFO - Dataset loaded and preprocessed successfully
+2025-04-11 10:47:35,132 - INFO - Enhanced model built successfully
+2025-04-11 10:47:37,618 - INFO -  * Detected change in 'D:\\Projects\\Master\\APISecurityTester\\.venv1\\Lib\\site-packages\\tensorflow\\python\\ops\\custom_gradient.py', reloading
+2025-04-11 10:47:42,298 - INFO -  * Restarting with watchdog (windowsapi)
+2025-04-11 10:47:52,982 - WARNING -  * Debugger is active!
+2025-04-11 10:47:53,020 - INFO -  * Debugger PIN: 109-460-982
+2025-04-11 10:47:53,677 - INFO - Loading dataset from mobile_app_vulnerabilities.csv
+2025-04-11 10:47:53,692 - INFO - Dataset loaded and preprocessed successfully
+2025-04-11 10:47:54,055 - INFO - Enhanced model built successfully
+2025-04-11 10:49:15,768 - INFO - Extended model training completed
+2025-04-11 10:49:15,769 - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2025-04-11 10:49:15,876 - INFO - Model saved to models/vulnerability_model.h5
+2025-04-11 10:49:16,753 - INFO - Training history plot saved
+2025-04-11 10:49:17,037 - INFO - Advanced metrics calculated
+2025-04-11 10:49:20,858 - INFO - Advanced visualization saved to model_metrics.png
+2025-04-11 10:49:22,013 - INFO - Feature importance visualization saved to feature_importance.png
+2025-04-11 10:49:22,015 - INFO - 127.0.0.1 - - [11/Apr/2025 10:49:22] "POST /api/train-model HTTP/1.1" 200 -
+2025-04-11 10:49:22,347 - INFO - 127.0.0.1 - - [11/Apr/2025 10:49:22] "GET /api/get-visualization/model_metrics?t=1744339762023 HTTP/1.1" 200 -
+2025-04-11 10:49:22,351 - INFO - 127.0.0.1 - - [11/Apr/2025 10:49:22] "GET /api/get-visualization/feature_importance?t=1744339762023 HTTP/1.1" 200 -
+2025-04-11 10:49:22,372 - INFO - 127.0.0.1 - - [11/Apr/2025 10:49:22] "GET /api/get-model-summary HTTP/1.1" 200 -
+2025-04-11 10:55:38,980 - INFO - 127.0.0.1 - - [11/Apr/2025 10:55:38] "GET /visualization HTTP/1.1" 200 -
+2025-04-11 10:55:39,231 - INFO - 127.0.0.1 - - [11/Apr/2025 10:55:39] "GET /api/get-visualization/model_metrics HTTP/1.1" 200 -
+2025-04-11 10:55:39,269 - INFO - 127.0.0.1 - - [11/Apr/2025 10:55:39] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-11 10:55:39,417 - INFO - 127.0.0.1 - - [11/Apr/2025 10:55:39] "GET /api/get-visualization/feature_importance HTTP/1.1" 200 -
+2025-04-11 10:55:39,442 - INFO - 127.0.0.1 - - [11/Apr/2025 10:55:39] "GET /api/get-visualization/training_history HTTP/1.1" 200 -
+2025-04-11 10:55:39,459 - INFO - 127.0.0.1 - - [11/Apr/2025 10:55:39] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-11 10:55:40,082 - INFO - 127.0.0.1 - - [11/Apr/2025 10:55:40] "GET /api/get-model-summary HTTP/1.1" 200 -
+2025-04-11 10:55:40,084 - INFO - 127.0.0.1 - - [11/Apr/2025 10:55:40] "GET /api/get-visualization/model_metrics?t=1744340139742 HTTP/1.1" 200 -
+2025-04-11 10:55:40,085 - INFO - 127.0.0.1 - - [11/Apr/2025 10:55:40] "GET /api/get-visualization/feature_importance?t=1744340139742 HTTP/1.1" 200 -
+2025-04-11 10:55:40,090 - INFO - 127.0.0.1 - - [11/Apr/2025 10:55:40] "GET /api/get-visualization/training_history?t=1744340139742 HTTP/1.1" 200 -
+2025-04-11 10:55:41,089 - INFO - 127.0.0.1 - - [11/Apr/2025 10:55:41] "GET /reports HTTP/1.1" 200 -
+2025-04-11 10:55:41,389 - INFO - 127.0.0.1 - - [11/Apr/2025 10:55:41] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-11 10:55:41,513 - INFO - 127.0.0.1 - - [11/Apr/2025 10:55:41] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-11 10:55:57,317 - INFO - 127.0.0.1 - - [11/Apr/2025 10:55:57] "GET / HTTP/1.1" 200 -
+2025-04-11 10:55:57,594 - INFO - 127.0.0.1 - - [11/Apr/2025 10:55:57] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-11 10:55:57,610 - INFO - 127.0.0.1 - - [11/Apr/2025 10:55:57] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-11 10:56:04,402 - INFO - 127.0.0.1 - - [11/Apr/2025 10:56:04] "GET /vulnerability-detection HTTP/1.1" 200 -
+2025-04-11 10:56:04,516 - INFO - 127.0.0.1 - - [11/Apr/2025 10:56:04] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-11 10:56:04,655 - INFO - 127.0.0.1 - - [11/Apr/2025 10:56:04] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-11 10:56:07,406 - INFO - 127.0.0.1 - - [11/Apr/2025 10:56:07] "GET /model-training HTTP/1.1" 200 -
+2025-04-11 10:56:07,497 - INFO - 127.0.0.1 - - [11/Apr/2025 10:56:07] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-11 10:56:07,663 - INFO - 127.0.0.1 - - [11/Apr/2025 10:56:07] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-11 10:56:07,995 - INFO - 127.0.0.1 - - [11/Apr/2025 10:56:07] "GET /api/get-config HTTP/1.1" 200 -
+2025-04-11 10:56:15,353 - INFO - Enhanced model built successfully
+2025-04-11 10:57:51,187 - INFO - Extended model training completed
+2025-04-11 10:57:51,188 - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2025-04-11 10:57:51,241 - INFO - Model saved to models/vulnerability_model.h5
+2025-04-11 10:57:51,745 - INFO - Training history plot saved
+2025-04-11 10:57:52,112 - INFO - Advanced metrics calculated
+2025-04-11 10:57:55,674 - INFO - Advanced visualization saved to model_metrics.png
+2025-04-11 10:57:56,459 - INFO - Feature importance visualization saved to feature_importance.png
+2025-04-11 10:57:56,460 - INFO - 127.0.0.1 - - [11/Apr/2025 10:57:56] "POST /api/train-model HTTP/1.1" 200 -
+2025-04-11 10:57:56,783 - INFO - 127.0.0.1 - - [11/Apr/2025 10:57:56] "GET /api/get-model-summary HTTP/1.1" 200 -
+2025-04-11 10:57:56,785 - INFO - 127.0.0.1 - - [11/Apr/2025 10:57:56] "GET /api/get-visualization/model_metrics?t=1744340276466 HTTP/1.1" 200 -
+2025-04-11 10:57:56,787 - INFO - 127.0.0.1 - - [11/Apr/2025 10:57:56] "GET /api/get-visualization/feature_importance?t=1744340276466 HTTP/1.1" 200 -
+2025-04-11 10:58:06,381 - INFO - 127.0.0.1 - - [11/Apr/2025 10:58:06] "GET /visualization HTTP/1.1" 200 -
+2025-04-11 10:58:06,694 - INFO - 127.0.0.1 - - [11/Apr/2025 10:58:06] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-11 10:58:07,006 - INFO - 127.0.0.1 - - [11/Apr/2025 10:58:07] "GET /api/get-visualization/model_metrics HTTP/1.1" 200 -
+2025-04-11 10:58:07,019 - INFO - 127.0.0.1 - - [11/Apr/2025 10:58:07] "GET /api/get-visualization/feature_importance HTTP/1.1" 200 -
+2025-04-11 10:58:07,028 - INFO - 127.0.0.1 - - [11/Apr/2025 10:58:07] "GET /api/get-visualization/training_history HTTP/1.1" 200 -
+2025-04-11 10:58:07,030 - INFO - 127.0.0.1 - - [11/Apr/2025 10:58:07] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-11 10:58:07,286 - INFO - 127.0.0.1 - - [11/Apr/2025 10:58:07] "GET /api/get-model-summary HTTP/1.1" 200 -
+2025-04-11 10:58:07,362 - INFO - 127.0.0.1 - - [11/Apr/2025 10:58:07] "GET /api/get-visualization/model_metrics?t=1744340287044 HTTP/1.1" 200 -
+2025-04-11 10:58:07,366 - INFO - 127.0.0.1 - - [11/Apr/2025 10:58:07] "GET /api/get-visualization/feature_importance?t=1744340287044 HTTP/1.1" 200 -
+2025-04-11 10:58:07,371 - INFO - 127.0.0.1 - - [11/Apr/2025 10:58:07] "GET /api/get-visualization/training_history?t=1744340287044 HTTP/1.1" 200 -
+2025-04-11 10:58:10,977 - INFO - 127.0.0.1 - - [11/Apr/2025 10:58:10] "GET /reports HTTP/1.1" 200 -
+2025-04-11 10:58:11,286 - INFO - 127.0.0.1 - - [11/Apr/2025 10:58:11] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-11 10:58:11,551 - INFO - 127.0.0.1 - - [11/Apr/2025 10:58:11] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-11 10:58:49,361 - INFO - 127.0.0.1 - - [11/Apr/2025 10:58:49] "GET / HTTP/1.1" 200 -
+2025-04-11 10:58:49,784 - INFO - 127.0.0.1 - - [11/Apr/2025 10:58:49] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-11 10:58:50,182 - INFO - 127.0.0.1 - - [11/Apr/2025 10:58:50] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-11 11:06:05,813 - INFO - 127.0.0.1 - - [11/Apr/2025 11:06:05] "GET /vulnerability-detection HTTP/1.1" 200 -
+2025-04-11 11:06:05,964 - INFO - 127.0.0.1 - - [11/Apr/2025 11:06:05] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-11 11:06:06,089 - INFO - 127.0.0.1 - - [11/Apr/2025 11:06:06] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-11 11:06:12,616 - INFO - 127.0.0.1 - - [11/Apr/2025 11:06:12] "GET /reports HTTP/1.1" 200 -
+2025-04-11 11:06:12,771 - INFO - 127.0.0.1 - - [11/Apr/2025 11:06:12] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-11 11:06:12,883 - INFO - 127.0.0.1 - - [11/Apr/2025 11:06:12] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-11 11:06:18,318 - INFO - 127.0.0.1 - - [11/Apr/2025 11:06:18] "[33mGET /api/download-report/security_report_20230615_123456.pdf HTTP/1.1[0m" 404 -
+2025-04-11 11:06:34,906 - INFO - 127.0.0.1 - - [11/Apr/2025 11:06:34] "GET /visualization HTTP/1.1" 200 -
+2025-04-11 11:06:35,216 - INFO - 127.0.0.1 - - [11/Apr/2025 11:06:35] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-11 11:06:35,306 - INFO - 127.0.0.1 - - [11/Apr/2025 11:06:35] "[36mGET /api/get-visualization/model_metrics HTTP/1.1[0m" 304 -
+2025-04-11 11:06:35,312 - INFO - 127.0.0.1 - - [11/Apr/2025 11:06:35] "[36mGET /api/get-visualization/feature_importance HTTP/1.1[0m" 304 -
+2025-04-11 11:06:35,314 - INFO - 127.0.0.1 - - [11/Apr/2025 11:06:35] "[36mGET /api/get-visualization/training_history HTTP/1.1[0m" 304 -
+2025-04-11 11:06:35,318 - INFO - 127.0.0.1 - - [11/Apr/2025 11:06:35] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-11 11:06:35,665 - INFO - 127.0.0.1 - - [11/Apr/2025 11:06:35] "GET /api/get-model-summary HTTP/1.1" 200 -
+2025-04-11 11:06:35,668 - INFO - 127.0.0.1 - - [11/Apr/2025 11:06:35] "GET /api/get-visualization/model_metrics?t=1744340795328 HTTP/1.1" 200 -
+2025-04-11 11:06:35,669 - INFO - 127.0.0.1 - - [11/Apr/2025 11:06:35] "GET /api/get-visualization/feature_importance?t=1744340795328 HTTP/1.1" 200 -
+2025-04-11 11:06:35,671 - INFO - 127.0.0.1 - - [11/Apr/2025 11:06:35] "GET /api/get-visualization/training_history?t=1744340795328 HTTP/1.1" 200 -
+2025-04-11 11:06:41,020 - INFO - 127.0.0.1 - - [11/Apr/2025 11:06:41] "GET /api/get-model-summary HTTP/1.1" 200 -
+2025-04-11 11:06:41,325 - INFO - 127.0.0.1 - - [11/Apr/2025 11:06:41] "GET /api/get-visualization/model_metrics?t=1744340800999 HTTP/1.1" 200 -
+2025-04-11 11:06:41,325 - INFO - 127.0.0.1 - - [11/Apr/2025 11:06:41] "GET /api/get-visualization/feature_importance?t=1744340800999 HTTP/1.1" 200 -
+2025-04-11 11:06:41,327 - INFO - 127.0.0.1 - - [11/Apr/2025 11:06:41] "GET /api/get-visualization/training_history?t=1744340800999 HTTP/1.1" 200 -
+2025-04-11 11:37:25,837 - INFO -  * Detected change in 'D:\\Projects\\Master\\APISecurityTester\\v2\\main.py', reloading

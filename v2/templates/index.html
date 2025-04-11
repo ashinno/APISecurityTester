@@ -1,0 +1,156 @@
+{% extends "layout.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">API Security Tester Dashboard</h2>
+                <p class="card-text">
+                    Welcome to the API Security Tester framework, a
+                    comprehensive solution for detecting security
+                    vulnerabilities in mobile applications using machine
+                    learning techniques.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6 mb-3">
+        <div class="card h-100">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="fas fa-shield-alt me-2"></i>Security
+                    Features</h5>
+            </div>
+            <div class="card-body">
+                <p>The framework analyzes the following security aspects:</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><i
+                                    class="fas fa-lock me-2"></i>Storage
+                                Encryption Level</li>
+                            <li class="list-group-item"><i
+                                    class="fas fa-key me-2"></i>API
+                                Security</li>
+                            <li class="list-group-item"><i
+                                    class="fas fa-exchange-alt me-2"></i>Data
+                                Transmission Security</li>
+                            <li class="list-group-item"><i
+                                    class="fas fa-user-shield me-2"></i>Authentication
+                                Strength</li>
+                            <li class="list-group-item"><i
+                                    class="fas fa-filter me-2"></i>Input
+                                Validation</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><i
+                                    class="fas fa-network-wired me-2"></i>Network
+                                Communication Security</li>
+                            <li class="list-group-item"><i
+                                    class="fas fa-box me-2"></i>Third-party
+                                Library Risk</li>
+                            <li class="list-group-item"><i
+                                    class="fas fa-cog me-2"></i>Runtime
+                                Permissions Management</li>
+                            <li class="list-group-item"><i
+                                    class="fas fa-mask me-2"></i>Code
+                                Obfuscation</li>
+                            <li class="list-group-item"><i
+                                    class="fas fa-certificate me-2"></i>Certificate
+                                Pinning</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <div class="card h-100">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0"><i class="fas fa-tools me-2"></i>Framework
+                    Capabilities</h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    <a href="/vulnerability-detection"
+                        class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1"><i
+                                    class="fas fa-search me-2"></i>Vulnerability
+                                Detection</h5>
+                        </div>
+                        <p class="mb-1">Analyze security features and detect
+                            potential vulnerabilities in mobile
+                            applications.</p>
+                    </a>
+                    <a href="/model-training"
+                        class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1"><i
+                                    class="fas fa-cogs me-2"></i>Model
+                                Training</h5>
+                        </div>
+                        <p class="mb-1">Train and evaluate machine learning
+                            models for vulnerability detection.</p>
+                    </a>
+                    <a href="/visualization"
+                        class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1"><i
+                                    class="fas fa-chart-line me-2"></i>Advanced
+                                Visualization</h5>
+                        </div>
+                        <p class="mb-1">Visualize model performance metrics and
+                            security analysis results.</p>
+                    </a>
+                    <a href="/reports"
+                        class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1"><i
+                                    class="fas fa-file-alt me-2"></i>Security
+                                Reports</h5>
+                        </div>
+                        <p class="mb-1">Generate comprehensive security
+                            assessment reports in multiple formats.</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Getting
+                    Started</h5>
+            </div>
+            <div class="card-body">
+                <p>To begin using the API Security Tester framework:</p>
+                <ol>
+                    <li>Navigate to the <a
+                            href="/vulnerability-detection">Vulnerability
+                            Detection</a> page to analyze security
+                        features.</li>
+                    <li>Use the <a href="/model-training">Model Training</a>
+                        page to train and evaluate custom models.</li>
+                    <li>Explore the <a href="/visualization">Visualization</a>
+                        page to view performance metrics and analysis
+                        results.</li>
+                    <li>Generate and download security reports from the <a
+                            href="/reports">Reports</a> page.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

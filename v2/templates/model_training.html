@@ -1,0 +1,674 @@
+{% extends "layout.html" %}
+
+{% block title %}Model Training{% endblock %}
+
+{% block head %}
+<style>
+    .training-progress {
+        display: none;
+    }
+    .training-results {
+        display: none;
+    }
+    .config-section {
+        margin-bottom: 20px;
+    }
+    .config-section h5 {
+        border-bottom: 1px solid #dee2e6;
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+    }
+    .param-info-icon {
+        cursor: pointer;
+        color: #6c757d;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0"><i class="fas fa-cogs me-2"></i>Model Training
+                    & Evaluation</h4>
+            </div>
+            <div class="card-body">
+                <p>Configure and train the machine learning model for
+                    vulnerability detection. Adjust the parameters below to
+                    customize the model training process.</p>
+
+                <ul class="nav nav-tabs" id="modelTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="config-tab"
+                            data-bs-toggle="tab" data-bs-target="#config"
+                            type="button" role="tab" aria-controls="config"
+                            aria-selected="true">
+                            <i class="fas fa-sliders-h me-2"></i>Configuration
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="training-tab"
+                            data-bs-toggle="tab" data-bs-target="#training"
+                            type="button" role="tab" aria-controls="training"
+                            aria-selected="false">
+                            <i class="fas fa-chart-line me-2"></i>Training
+                            Progress
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="results-tab"
+                            data-bs-toggle="tab" data-bs-target="#results"
+                            type="button" role="tab" aria-controls="results"
+                            aria-selected="false">
+                            <i class="fas fa-clipboard-check me-2"></i>Results
+                        </button>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="modelTabsContent">
+                    <!-- Configuration Tab -->
+                    <div class="tab-pane fade show active" id="config"
+                        role="tabpanel" aria-labelledby="config-tab">
+                        <div class="mt-4">
+                            <form id="training-form">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="config-section">
+                                            <h5><i
+                                                    class="fas fa-microchip me-2"></i>Model
+                                                Parameters</h5>
+
+                                            <div class="mb-3">
+                                                <label for="learning-rate"
+                                                    class="form-label">
+                                                    Learning Rate
+                                                    <i
+                                                        class="fas fa-info-circle param-info-icon"
+                                                        data-bs-toggle="tooltip"
+                                                        title="Controls how quickly the model adapts to the problem. Smaller values require more training epochs but may lead to better results."></i>
+                                                </label>
+                                                <div class="input-group">
+                                                    <input type="number"
+                                                        class="form-control"
+                                                        id="learning-rate"
+                                                        name="model_params.learning_rate"
+                                                        min="0.0001" max="0.1"
+                                                        step="0.0001"
+                                                        value="0.001">
+                                                    <span
+                                                        class="input-group-text">η</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="dropout-rate"
+                                                    class="form-label">
+                                                    Dropout Rate
+                                                    <i
+                                                        class="fas fa-info-circle param-info-icon"
+                                                        data-bs-toggle="tooltip"
+                                                        title="Helps prevent overfitting by randomly setting a fraction of input units to 0 during training."></i>
+                                                </label>
+                                                <div class="input-group">
+                                                    <input type="number"
+                                                        class="form-control"
+                                                        id="dropout-rate"
+                                                        name="model_params.dropout_rate"
+                                                        min="0" max="0.9"
+                                                        step="0.1" value="0.4">
+                                                    <span
+                                                        class="input-group-text">%</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="batch-size"
+                                                    class="form-label">
+                                                    Batch Size
+                                                    <i
+                                                        class="fas fa-info-circle param-info-icon"
+                                                        data-bs-toggle="tooltip"
+                                                        title="Number of samples processed before the model is updated. Larger batch sizes require more memory but can lead to faster training."></i>
+                                                </label>
+                                                <input type="number"
+                                                    class="form-control"
+                                                    id="batch-size"
+                                                    name="model_params.batch_size"
+                                                    min="8" max="256" step="8"
+                                                    value="64">
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="l2-regularization"
+                                                    class="form-label">
+                                                    L2 Regularization
+                                                    <i
+                                                        class="fas fa-info-circle param-info-icon"
+                                                        data-bs-toggle="tooltip"
+                                                        title="Adds a penalty to the loss function to prevent overfitting by discouraging large weights."></i>
+                                                </label>
+                                                <div class="input-group">
+                                                    <input type="number"
+                                                        class="form-control"
+                                                        id="l2-regularization"
+                                                        name="model_params.l2_regularization"
+                                                        min="0.001" max="0.1"
+                                                        step="0.001"
+                                                        value="0.01">
+                                                    <span
+                                                        class="input-group-text">λ</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="config-section">
+                                            <h5><i
+                                                    class="fas fa-graduation-cap me-2"></i>Training
+                                                Parameters</h5>
+
+                                            <div class="mb-3">
+                                                <label for="epochs"
+                                                    class="form-label">
+                                                    Epochs
+                                                    <i
+                                                        class="fas fa-info-circle param-info-icon"
+                                                        data-bs-toggle="tooltip"
+                                                        title="Number of complete passes through the training dataset. More epochs can lead to better learning but may cause overfitting."></i>
+                                                </label>
+                                                <input type="number"
+                                                    class="form-control"
+                                                    id="epochs"
+                                                    name="training_params.epochs"
+                                                    min="10" max="1000"
+                                                    step="10" value="500">
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="validation-split"
+                                                    class="form-label">
+                                                    Validation Split
+                                                    <i
+                                                        class="fas fa-info-circle param-info-icon"
+                                                        data-bs-toggle="tooltip"
+                                                        title="Fraction of the training data to be used as validation data during training."></i>
+                                                </label>
+                                                <div class="input-group">
+                                                    <input type="number"
+                                                        class="form-control"
+                                                        id="validation-split"
+                                                        name="training_params.validation_split"
+                                                        min="0.1" max="0.5"
+                                                        step="0.05" value="0.2">
+                                                    <span
+                                                        class="input-group-text">%</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="early-stopping"
+                                                    class="form-label">
+                                                    Early Stopping Patience
+                                                    <i
+                                                        class="fas fa-info-circle param-info-icon"
+                                                        data-bs-toggle="tooltip"
+                                                        title="Number of epochs with no improvement after which training will be stopped to prevent overfitting."></i>
+                                                </label>
+                                                <input type="number"
+                                                    class="form-control"
+                                                    id="early-stopping"
+                                                    name="training_params.early_stopping_patience"
+                                                    min="5" max="100" step="5"
+                                                    value="30">
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="reduce-lr"
+                                                    class="form-label">
+                                                    Reduce LR Patience
+                                                    <i
+                                                        class="fas fa-info-circle param-info-icon"
+                                                        data-bs-toggle="tooltip"
+                                                        title="Number of epochs with no improvement after which learning rate will be reduced."></i>
+                                                </label>
+                                                <input type="number"
+                                                    class="form-control"
+                                                    id="reduce-lr"
+                                                    name="training_params.reduce_lr_patience"
+                                                    min="3" max="50" step="1"
+                                                    value="15">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-12 text-center">
+                                        <button type="submit"
+                                            class="btn btn-primary btn-lg">
+                                            <i
+                                                class="fas fa-play me-2"></i>Start
+                                            Training
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Training Progress Tab -->
+                    <div class="tab-pane fade" id="training" role="tabpanel"
+                        aria-labelledby="training-tab">
+                        <div class="mt-4 training-progress">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title"><i
+                                            class="fas fa-spinner fa-spin me-2"></i>Training
+                                        in Progress</h5>
+                                    <p class="card-text">The model is currently
+                                        being trained with the specified
+                                        parameters. This may take several
+                                        minutes depending on the
+                                        configuration.</p>
+
+                                    <div class="progress mb-3">
+                                        <div id="training-progress-bar"
+                                            class="progress-bar progress-bar-striped progress-bar-animated"
+                                            role="progressbar" style="width: 0%"
+                                            aria-valuenow="0" aria-valuemin="0"
+                                            aria-valuemax="100">0%</div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="card mb-3">
+                                                <div
+                                                    class="card-header bg-light">Loss</div>
+                                                <div class="card-body">
+                                                    <canvas id="loss-chart"
+                                                        height="200"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="card mb-3">
+                                                <div
+                                                    class="card-header bg-light">Accuracy</div>
+                                                <div class="card-body">
+                                                    <canvas id="accuracy-chart"
+                                                        height="200"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Results Tab -->
+                    <div class="tab-pane fade" id="results" role="tabpanel"
+                        aria-labelledby="results-tab">
+                        <div class="mt-4 training-results">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card mb-3">
+                                        <div
+                                            class="card-header bg-success text-white">
+                                            <h5 class="mb-0"><i
+                                                    class="fas fa-chart-pie me-2"></i>Model
+                                                Metrics</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="card mb-3">
+                                                        <div
+                                                            class="card-body text-center">
+                                                            <h6
+                                                                class="card-title">ROC
+                                                                AUC</h6>
+                                                            <h2
+                                                                id="roc-auc-value">0.00</h2>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="card mb-3">
+                                                        <div
+                                                            class="card-body text-center">
+                                                            <h6
+                                                                class="card-title">PR
+                                                                AUC</h6>
+                                                            <h2
+                                                                id="pr-auc-value">0.00</h2>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="text-center">
+                                                <img id="model-metrics-img" src
+                                                    alt="Model Metrics"
+                                                    class="img-fluid mt-3"
+                                                    style="max-width: 100%; display: none;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="card mb-3">
+                                        <div
+                                            class="card-header bg-info text-white">
+                                            <h5 class="mb-0"><i
+                                                    class="fas fa-project-diagram me-2"></i>Model
+                                                Architecture</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <pre id="model-summary"
+                                                class="p-3 bg-light"
+                                                style="max-height: 300px; overflow-y: auto;"><!-- Populated by JavaScript --></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div
+                                            class="card-header bg-warning text-dark">
+                                            <h5 class="mb-0"><i
+                                                    class="fas fa-weight-hanging me-2"></i>Feature
+                                                Importance</h5>
+                                        </div>
+                                        <div class="card-body text-center">
+                                            <img id="feature-importance-img" src
+                                                alt="Feature Importance"
+                                                class="img-fluid"
+                                                style="max-width: 100%; display: none;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Initialize tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+    
+    // Load current configuration
+    fetch('/api/get-config')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Update form fields with current configuration
+                const config = data.config;
+                
+                // Model parameters
+                if (config.model_params) {
+                    document.getElementById('learning-rate').value = config.model_params.learning_rate || 0.001;
+                    document.getElementById('dropout-rate').value = config.model_params.dropout_rate || 0.4;
+                    document.getElementById('batch-size').value = config.model_params.batch_size || 64;
+                    document.getElementById('l2-regularization').value = config.model_params.l2_regularization || 0.01;
+                }
+                
+                // Training parameters
+                if (config.training_params) {
+                    document.getElementById('epochs').value = config.training_params.epochs || 500;
+                    document.getElementById('validation-split').value = config.training_params.validation_split || 0.2;
+                    document.getElementById('early-stopping').value = config.training_params.early_stopping_patience || 30;
+                    document.getElementById('reduce-lr').value = config.training_params.reduce_lr_patience || 15;
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error loading configuration:', error);
+        });
+    
+    // Training form submission
+    document.getElementById('training-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Collect form data
+        const formData = {};
+        const formElements = this.elements;
+        
+        for (let i = 0; i < formElements.length; i++) {
+            const element = formElements[i];
+            if (element.name && element.name.includes('.')) {
+                const [section, param] = element.name.split('.');
+                if (!formData[section]) {
+                    formData[section] = {};
+                }
+                formData[section][param] = parseFloat(element.value);
+            }
+        }
+        
+        // Show training progress tab
+        document.querySelector('#training-tab').click();
+        document.querySelector('.training-progress').style.display = 'block';
+        document.querySelector('.training-results').style.display = 'none';
+        
+        // Reset progress bar
+        const progressBar = document.getElementById('training-progress-bar');
+        progressBar.style.width = '0%';
+        progressBar.textContent = '0%';
+        
+        // Initialize charts
+        initializeTrainingCharts();
+        
+        // Send API request
+        fetch('/api/train-model', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Update progress bar to 100%
+                progressBar.style.width = '100%';
+                progressBar.textContent = '100%';
+                
+                // Show results tab
+                document.querySelector('#results-tab').click();
+                document.querySelector('.training-results').style.display = 'block';
+                
+                // Update metrics
+                document.getElementById('roc-auc-value').textContent = data.metrics.roc_auc.toFixed(3);
+                document.getElementById('pr-auc-value').textContent = data.metrics.pr_auc.toFixed(3);
+                
+                // Load model summary
+                loadModelSummary();
+                
+                // Load visualization images
+                loadVisualizationImages();
+            } else {
+                alert('Error: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while training the model.');
+        });
+        
+        // Simulate training progress (in a real app, this would be updated via WebSockets or polling)
+        simulateTrainingProgress();
+    });
+    
+    // Initialize training charts
+    function initializeTrainingCharts() {
+        // Loss chart
+        const lossCtx = document.getElementById('loss-chart').getContext('2d');
+        if (window.lossChart) {
+            window.lossChart.destroy();
+        }
+        window.lossChart = new Chart(lossCtx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [
+                    {
+                        label: 'Training Loss',
+                        data: [],
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        tension: 0.1
+                    },
+                    {
+                        label: 'Validation Loss',
+                        data: [],
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        tension: 0.1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        
+        // Accuracy chart
+        const accuracyCtx = document.getElementById('accuracy-chart').getContext('2d');
+        if (window.accuracyChart) {
+            window.accuracyChart.destroy();
+        }
+        window.accuracyChart = new Chart(accuracyCtx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [
+                    {
+                        label: 'Training Accuracy',
+                        data: [],
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        tension: 0.1
+                    },
+                    {
+                        label: 'Validation Accuracy',
+                        data: [],
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                        tension: 0.1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 1
+                    }
+                }
+            }
+        });
+    }
+    
+    // Simulate training progress (in a real app, this would be updated via WebSockets or polling)
+    function simulateTrainingProgress() {
+        const progressBar = document.getElementById('training-progress-bar');
+        const epochs = parseInt(document.getElementById('epochs').value);
+        const earlyStoppingPatience = parseInt(document.getElementById('early-stopping').value);
+        
+        // Estimate the number of epochs that will actually run (accounting for early stopping)
+        const estimatedEpochs = Math.min(epochs, 100 + Math.floor(Math.random() * earlyStoppingPatience));
+        
+        let currentEpoch = 0;
+        const interval = setInterval(() => {
+            currentEpoch++;
+            const progress = Math.min(100, Math.floor((currentEpoch / estimatedEpochs) * 100));
+            
+            // Update progress bar
+            progressBar.style.width = `${progress}%`;
+            progressBar.textContent = `${progress}%`;
+            
+            // Update charts
+            updateTrainingCharts(currentEpoch, estimatedEpochs);
+            
+            if (currentEpoch >= estimatedEpochs) {
+                clearInterval(interval);
+            }
+        }, 100);
+    }
+    
+    // Update training charts with simulated data
+    function updateTrainingCharts(epoch, totalEpochs) {
+        // Generate simulated data points
+        const trainLoss = 0.7 * Math.exp(-epoch / (totalEpochs / 3)) + 0.1 * Math.random();
+        const valLoss = 0.8 * Math.exp(-epoch / (totalEpochs / 3)) + 0.15 * Math.random();
+        const trainAcc = 0.9 * (1 - Math.exp(-epoch / (totalEpochs / 5))) + 0.05 * Math.random();
+        const valAcc = 0.85 * (1 - Math.exp(-epoch / (totalEpochs / 5))) + 0.07 * Math.random();
+        
+        // Add data to loss chart
+        window.lossChart.data.labels.push(epoch);
+        window.lossChart.data.datasets[0].data.push(trainLoss);
+        window.lossChart.data.datasets[1].data.push(valLoss);
+        window.lossChart.update();
+        
+        // Add data to accuracy chart
+        window.accuracyChart.data.labels.push(epoch);
+        window.accuracyChart.data.datasets[0].data.push(trainAcc);
+        window.accuracyChart.data.datasets[1].data.push(valAcc);
+        window.accuracyChart.update();
+    }
+    
+    // Load model summary
+    function loadModelSummary() {
+        fetch('/api/get-model-summary')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('model-summary').textContent = data.summary;
+                }
+            })
+            .catch(error => {
+                console.error('Error loading model summary:', error);
+            });
+    }
+    
+    // Load visualization images
+    function loadVisualizationImages() {
+        // Add timestamp to prevent caching
+        const timestamp = new Date().getTime();
+        
+        // Model metrics image
+        const metricsImg = document.getElementById('model-metrics-img');
+        metricsImg.src = `/api/get-visualization/model_metrics?t=${timestamp}`;
+        metricsImg.onload = function() {
+            this.style.display = 'block';
+        };
+        
+        // Feature importance image
+        const featureImg = document.getElementById('feature-importance-img');
+        featureImg.src = `/api/get-visualization/feature_importance?t=${timestamp}`;
+        featureImg.onload = function() {
+            this.style.display = 'block';
+        };
+    }
+</script>
+{% endblock %}

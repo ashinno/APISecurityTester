@@ -1,0 +1,40 @@
+2025-04-11 10:44:01,477 - WARNING - Config file not found at config.json, using defaults
+2025-04-11 10:44:01,519 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.62.38:5000
+2025-04-11 10:44:01,519 - INFO - [33mPress CTRL+C to quit[0m
+2025-04-11 10:44:01,545 - INFO -  * Restarting with watchdog (windowsapi)
+2025-04-11 10:44:10,799 - WARNING - Config file not found at config.json, using defaults
+2025-04-11 10:44:10,821 - WARNING -  * Debugger is active!
+2025-04-11 10:44:10,845 - INFO -  * Debugger PIN: 109-460-982
+2025-04-11 10:44:11,536 - INFO - 127.0.0.1 - - [11/Apr/2025 10:44:11] "GET /?ide_webview_request_time=1744339446076 HTTP/1.1" 200 -
+2025-04-11 10:44:11,641 - INFO - 127.0.0.1 - - [11/Apr/2025 10:44:11] "GET /static/css/style.css HTTP/1.1" 200 -
+2025-04-11 10:44:11,862 - INFO - 127.0.0.1 - - [11/Apr/2025 10:44:11] "GET /static/js/main.js HTTP/1.1" 200 -
+2025-04-11 10:44:14,001 - INFO - 127.0.0.1 - - [11/Apr/2025 10:44:14] "GET / HTTP/1.1" 200 -
+2025-04-11 10:44:14,850 - INFO - 127.0.0.1 - - [11/Apr/2025 10:44:14] "GET /static/css/style.css HTTP/1.1" 200 -
+2025-04-11 10:44:14,856 - INFO - 127.0.0.1 - - [11/Apr/2025 10:44:14] "GET /static/js/main.js HTTP/1.1" 200 -
+2025-04-11 10:44:17,655 - INFO - 127.0.0.1 - - [11/Apr/2025 10:44:17] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-04-11 10:44:21,052 - INFO - 127.0.0.1 - - [11/Apr/2025 10:44:21] "GET /vulnerability-detection HTTP/1.1" 200 -
+2025-04-11 10:44:21,353 - INFO - 127.0.0.1 - - [11/Apr/2025 10:44:21] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-11 10:44:21,477 - INFO - 127.0.0.1 - - [11/Apr/2025 10:44:21] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-11 10:44:25,395 - INFO - Loading dataset from mobile_app_vulnerabilities.csv
+2025-04-11 10:44:25,441 - INFO - Dataset loaded and preprocessed successfully
+2025-04-11 10:44:25,515 - INFO -  * Detected change in 'D:\\Projects\\Master\\APISecurityTester\\.venv1\\Lib\\site-packages\\keras\\src\\layers\\core\\dense.py', reloading
+2025-04-11 10:44:26,104 - INFO - Enhanced model built successfully
+2025-04-11 10:44:28,781 - INFO -  * Restarting with watchdog (windowsapi)
+2025-04-11 10:44:40,003 - WARNING - Config file not found at config.json, using defaults
+2025-04-11 10:44:40,033 - WARNING -  * Debugger is active!
+2025-04-11 10:44:40,068 - INFO -  * Debugger PIN: 109-460-982
+2025-04-11 10:44:40,848 - INFO - 127.0.0.1 - - [11/Apr/2025 10:44:40] "GET /model-training HTTP/1.1" 200 -
+2025-04-11 10:44:40,852 - INFO - 127.0.0.1 - - [11/Apr/2025 10:44:40] "GET / HTTP/1.1" 200 -
+2025-04-11 10:44:40,853 - INFO - 127.0.0.1 - - [11/Apr/2025 10:44:40] "GET / HTTP/1.1" 200 -
+2025-04-11 10:44:41,094 - INFO - 127.0.0.1 - - [11/Apr/2025 10:44:41] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-11 10:44:41,315 - INFO - 127.0.0.1 - - [11/Apr/2025 10:44:41] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-11 10:45:19,323 - INFO - 127.0.0.1 - - [11/Apr/2025 10:45:19] "GET /vulnerability-detection HTTP/1.1" 200 -
+2025-04-11 10:45:19,451 - INFO - 127.0.0.1 - - [11/Apr/2025 10:45:19] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-11 10:45:19,575 - INFO - 127.0.0.1 - - [11/Apr/2025 10:45:19] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-11 10:45:20,975 - INFO - 127.0.0.1 - - [11/Apr/2025 10:45:20] "GET /model-training HTTP/1.1" 200 -
+2025-04-11 10:45:21,097 - INFO - 127.0.0.1 - - [11/Apr/2025 10:45:21] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-04-11 10:45:21,237 - INFO - 127.0.0.1 - - [11/Apr/2025 10:45:21] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-04-11 10:45:21,561 - INFO - 127.0.0.1 - - [11/Apr/2025 10:45:21] "GET /api/get-config HTTP/1.1" 200 -

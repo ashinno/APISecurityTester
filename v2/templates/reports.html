@@ -1,0 +1,537 @@
+{% extends "layout.html" %}
+
+{% block title %}Reports{% endblock %}
+
+{% block head %}
+<style>
+    .report-card {
+        margin-bottom: 20px;
+    }
+    .report-actions {
+        display: flex;
+        justify-content: flex-end;
+    }
+    .report-date {
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+    .report-score {
+        font-weight: bold;
+    }
+    .report-score-high {
+        color: #dc3545;
+    }
+    .report-score-medium {
+        color: #fd7e14;
+    }
+    .report-score-low {
+        color: #28a745;
+    }
+    .no-reports {
+        text-align: center;
+        padding: 50px 0;
+        color: #6c757d;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0"><i class="fas fa-file-alt me-2"></i>Security
+                    Reports</h4>
+            </div>
+            <div class="card-body">
+                <p>View and download security assessment reports for mobile
+                    applications. Reports provide detailed analysis of security
+                    vulnerabilities and recommendations for improvement.</p>
+
+                <div class="row mb-4">
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            <input type="text" class="form-control"
+                                id="search-reports"
+                                placeholder="Search reports...">
+                            <button class="btn btn-outline-secondary"
+                                type="button">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-end">
+                        <div class="btn-group">
+                            <button type="button"
+                                class="btn btn-outline-primary dropdown-toggle"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-filter me-2"></i>Filter
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">All
+                                        Reports</a></li>
+                                <li><a class="dropdown-item" href="#">High
+                                        Risk</a></li>
+                                <li><a class="dropdown-item" href="#">Medium
+                                        Risk</a></li>
+                                <li><a class="dropdown-item" href="#">Low
+                                        Risk</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="reports-container">
+                    <!-- Reports will be populated here -->
+                    <div class="no-reports">
+                        <i class="fas fa-folder-open fa-4x mb-3"></i>
+                        <h5>No reports available</h5>
+                        <p>Generate a security report from the Vulnerability
+                            Detection page.</p>
+                    </div>
+                </div>
+
+                <!-- Report Template (Hidden) -->
+                <template id="report-template">
+                    <div class="card report-card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h5 class="card-title report-title">Mobile
+                                        App Security Report</h5>
+                                    <p class="card-text report-date">Generated
+                                        on: <span class="date-value">June 15,
+                                            2023</span></p>
+                                    <p class="card-text">
+                                        Vulnerability Score: <span
+                                            class="report-score report-score-medium">65.7%</span>
+                                    </p>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="report-actions">
+                                        <a href="#"
+                                            class="btn btn-outline-primary me-2 view-report-btn">
+                                            <i class="fas fa-eye me-1"></i>View
+                                        </a>
+                                        <a href="#"
+                                            class="btn btn-primary download-report-btn">
+                                            <i
+                                                class="fas fa-download me-1"></i>Download
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+
+                <!-- Report Modal -->
+                <div class="modal fade" id="reportModal" tabindex="-1"
+                    aria-labelledby="reportModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"
+                                    id="reportModalLabel">Security Report</h5>
+                                <button type="button" class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="report-content">
+                                    <div class="text-center mb-4">
+                                        <h4>Mobile App Security Assessment
+                                            Report</h4>
+                                        <p class="text-muted">Generated on:
+                                            <span id="modal-report-date">June
+                                                15, 2023</span></p>
+                                    </div>
+
+                                    <div class="card mb-3">
+                                        <div
+                                            class="card-header bg-primary text-white">
+                                            <h5 class="mb-0">Vulnerability
+                                                Score</h5>
+                                        </div>
+                                        <div class="card-body text-center">
+                                            <div class="position-relative"
+                                                style="width: 150px; height: 150px; margin: 0 auto;">
+                                                <canvas
+                                                    id="modal-vulnerability-gauge"></canvas>
+                                                <div
+                                                    class="position-absolute top-50 start-50 translate-middle text-center">
+                                                    <h3
+                                                        id="modal-vulnerability-score">0%</h3>
+                                                    <p
+                                                        id="modal-vulnerability-level">Low
+                                                        Risk</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card mb-3">
+                                        <div
+                                            class="card-header bg-info text-white">
+                                            <h5 class="mb-0">Vulnerability
+                                                Breakdown</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <ul
+                                                class="list-group list-group-flush"
+                                                id="modal-vulnerability-list">
+                                                <!-- Populated by JavaScript -->
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="card">
+                                        <div
+                                            class="card-header bg-warning text-dark">
+                                            <h5 class="mb-0">Risk Factors</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <canvas
+                                                id="modal-risk-factors-chart"
+                                                height="200"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Close</button>
+                                <a href="#" class="btn btn-primary"
+                                    id="modal-download-btn">
+                                    <i class="fas fa-download me-1"></i>Download
+                                    PDF
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Sample reports data (in a real app, this would come from the backend)
+    const sampleReports = [
+        {
+            id: 'report_20230615_123456',
+            title: 'E-commerce App Security Report',
+            date: 'June 15, 2023',
+            score: 0.657,
+            path: 'security_report_20230615_123456.pdf',
+            vulnerabilityBreakdown: {
+                data_security_risks: { score: 0.72, risk_level: 'High' },
+                authentication_risks: { score: 0.58, risk_level: 'Medium' },
+                api_security_risks: { score: 0.63, risk_level: 'Medium' },
+                runtime_security_risks: { score: 0.45, risk_level: 'Medium' }
+            },
+            riskFactors: {
+                storage_encryption_level: { weight: 0.20, impact: 0.35 },
+                api_security_score: { weight: 0.20, impact: 0.40 },
+                data_transmission_security: { weight: 0.15, impact: 0.25 },
+                authentication_strength: { weight: 0.15, impact: 0.45 },
+                input_validation_score: { weight: 0.10, impact: 0.30 },
+                network_communication_security: { weight: 0.10, impact: 0.20 },
+                third_party_library_risk: { weight: 0.05, impact: 0.60 },
+                runtime_permissions_management: { weight: 0.03, impact: 0.40 },
+                code_obfuscation_level: { weight: 0.01, impact: 0.70 },
+                certificate_pinning_implementation: { weight: 0.01, impact: 0.50 }
+            }
+        },
+        {
+            id: 'report_20230610_987654',
+            title: 'Banking App Security Report',
+            date: 'June 10, 2023',
+            score: 0.32,
+            path: 'security_report_20230610_987654.pdf',
+            vulnerabilityBreakdown: {
+                data_security_risks: { score: 0.25, risk_level: 'Low' },
+                authentication_risks: { score: 0.30, risk_level: 'Low' },
+                api_security_risks: { score: 0.35, risk_level: 'Low' },
+                runtime_security_risks: { score: 0.40, risk_level: 'Medium' }
+            },
+            riskFactors: {
+                storage_encryption_level: { weight: 0.20, impact: 0.15 },
+                api_security_score: { weight: 0.20, impact: 0.20 },
+                data_transmission_security: { weight: 0.15, impact: 0.10 },
+                authentication_strength: { weight: 0.15, impact: 0.25 },
+                input_validation_score: { weight: 0.10, impact: 0.30 },
+                network_communication_security: { weight: 0.10, impact: 0.15 },
+                third_party_library_risk: { weight: 0.05, impact: 0.40 },
+                runtime_permissions_management: { weight: 0.03, impact: 0.35 },
+                code_obfuscation_level: { weight: 0.01, impact: 0.50 },
+                certificate_pinning_implementation: { weight: 0.01, impact: 0.20 }
+            }
+        },
+        {
+            id: 'report_20230605_456789',
+            title: 'Social Media App Security Report',
+            date: 'June 5, 2023',
+            score: 0.85,
+            path: 'security_report_20230605_456789.pdf',
+            vulnerabilityBreakdown: {
+                data_security_risks: { score: 0.90, risk_level: 'High' },
+                authentication_risks: { score: 0.80, risk_level: 'High' },
+                api_security_risks: { score: 0.85, risk_level: 'High' },
+                runtime_security_risks: { score: 0.75, risk_level: 'High' }
+            },
+            riskFactors: {
+                storage_encryption_level: { weight: 0.20, impact: 0.85 },
+                api_security_score: { weight: 0.20, impact: 0.80 },
+                data_transmission_security: { weight: 0.15, impact: 0.90 },
+                authentication_strength: { weight: 0.15, impact: 0.75 },
+                input_validation_score: { weight: 0.10, impact: 0.70 },
+                network_communication_security: { weight: 0.10, impact: 0.85 },
+                third_party_library_risk: { weight: 0.05, impact: 0.90 },
+                runtime_permissions_management: { weight: 0.03, impact: 0.80 },
+                code_obfuscation_level: { weight: 0.01, impact: 0.95 },
+                certificate_pinning_implementation: { weight: 0.01, impact: 0.70 }
+            }
+        }
+    ];
+    
+    // Display reports
+    function displayReports(reports) {
+        const container = document.getElementById('reports-container');
+        const template = document.getElementById('report-template');
+        
+        // Clear container
+        container.innerHTML = '';
+        
+        if (reports.length === 0) {
+            container.innerHTML = `
+                <div class="no-reports">
+                    <i class="fas fa-folder-open fa-4x mb-3"></i>
+                    <h5>No reports available</h5>
+                    <p>Generate a security report from the Vulnerability Detection page.</p>
+                </div>
+            `;
+            return;
+        }
+        
+        // Add each report
+        reports.forEach(report => {
+            const reportElement = template.content.cloneNode(true);
+            
+            // Set report data
+            reportElement.querySelector('.report-title').textContent = report.title;
+            reportElement.querySelector('.date-value').textContent = report.date;
+            
+            const scoreElement = reportElement.querySelector('.report-score');
+            scoreElement.textContent = (report.score * 100).toFixed(1) + '%';
+            
+            // Set score color
+            if (report.score > 0.7) {
+                scoreElement.className = 'report-score report-score-high';
+            } else if (report.score > 0.4) {
+                scoreElement.className = 'report-score report-score-medium';
+            } else {
+                scoreElement.className = 'report-score report-score-low';
+            }
+            
+            // Set button actions
+            const viewBtn = reportElement.querySelector('.view-report-btn');
+            viewBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                showReportModal(report);
+            });
+            
+            const downloadBtn = reportElement.querySelector('.download-report-btn');
+            downloadBtn.href = `/api/download-report/${report.path}`;
+            downloadBtn.download = report.title.replace(/\s+/g, '_') + '.pdf';
+            
+            container.appendChild(reportElement);
+        });
+    }
+    
+    // Show report modal
+    function showReportModal(report) {
+        // Set modal data
+        document.getElementById('reportModalLabel').textContent = report.title;
+        document.getElementById('modal-report-date').textContent = report.date;
+        
+        // Set download button
+        const downloadBtn = document.getElementById('modal-download-btn');
+        downloadBtn.href = `/api/download-report/${report.path}`;
+        downloadBtn.download = report.title.replace(/\s+/g, '_') + '.pdf';
+        
+        // Update vulnerability gauge
+        updateModalVulnerabilityGauge(report.score);
+        
+        // Update vulnerability breakdown
+        updateModalVulnerabilityBreakdown(report.vulnerabilityBreakdown);
+        
+        // Update risk factors chart
+        updateModalRiskFactorsChart(report.riskFactors);
+        
+        // Show modal
+        const modal = new bootstrap.Modal(document.getElementById('reportModal'));
+        modal.show();
+    }
+    
+    // Update modal vulnerability gauge
+    function updateModalVulnerabilityGauge(score) {
+        // Update text display
+        document.getElementById('modal-vulnerability-score').textContent = (score * 100).toFixed(1) + '%';
+        
+        // Set risk level text and color
+        const levelElement = document.getElementById('modal-vulnerability-level');
+        if (score > 0.7) {
+            levelElement.textContent = 'High Risk';
+            levelElement.className = 'report-score-high';
+        } else if (score > 0.4) {
+            levelElement.textContent = 'Medium Risk';
+            levelElement.className = 'report-score-medium';
+        } else {
+            levelElement.textContent = 'Low Risk';
+            levelElement.className = 'report-score-low';
+        }
+        
+        // Create or update gauge chart
+        const ctx = document.getElementById('modal-vulnerability-gauge').getContext('2d');
+        
+        // Destroy existing chart if it exists
+        if (window.modalGaugeChart) {
+            window.modalGaugeChart.destroy();
+        }
+        
+        // Create new chart
+        window.modalGaugeChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: [score, 1 - score],
+                    backgroundColor: [
+                        score > 0.7 ? '#dc3545' : (score > 0.4 ? '#fd7e14' : '#28a745'),
+                        '#e9ecef'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                cutout: '70%',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        enabled: false
+                    }
+                }
+            }
+        });
+    }
+    
+    // Update modal vulnerability breakdown
+    function updateModalVulnerabilityBreakdown(breakdown) {
+        const list = document.getElementById('modal-vulnerability-list');
+        list.innerHTML = '';
+        
+        for (const [type, details] of Object.entries(breakdown)) {
+            const formattedType = type.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+            const riskClass = details.risk_level === 'High' ? 'report-score-high' : 
+                            details.risk_level === 'Medium' ? 'report-score-medium' : 'report-score-low';
+            
+            const li = document.createElement('li');
+            li.className = 'list-group-item d-flex justify-content-between align-items-center';
+            li.innerHTML = `
+                ${formattedType}
+                <span class="${riskClass}">
+                    ${(details.score * 100).toFixed(1)}% (${details.risk_level})
+                </span>
+            `;
+            list.appendChild(li);
+        }
+    }
+    
+    // Update modal risk factors chart
+    function updateModalRiskFactorsChart(riskFactors) {
+        const labels = [];
+        const weights = [];
+        const impacts = [];
+        
+        for (const [factor, details] of Object.entries(riskFactors)) {
+            labels.push(factor.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()));
+            weights.push(details.weight);
+            impacts.push(details.impact);
+        }
+        
+        const ctx = document.getElementById('modal-risk-factors-chart').getContext('2d');
+        
+        // Destroy existing chart if it exists
+        if (window.modalRiskChart) {
+            window.modalRiskChart.destroy();
+        }
+        
+        // Create new chart
+        window.modalRiskChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Weight',
+                        data: weights,
+                        backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Impact',
+                        data: impacts,
+                        backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 1
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Risk Factors Analysis'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': ' + (context.raw * 100).toFixed(1) + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+    
+    // Search reports
+    document.getElementById('search-reports').addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        const filteredReports = sampleReports.filter(report => 
+            report.title.toLowerCase().includes(searchTerm) ||
+            report.date.toLowerCase().includes(searchTerm)
+        );
+        displayReports(filteredReports);
+    });
+    
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+        displayReports(sampleReports);
+    });
+</script>
+{% endblock %}
